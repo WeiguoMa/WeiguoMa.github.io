@@ -5,7 +5,7 @@ url: https://WeiguoMa.github.io
 avatar: /assets/image/avatar.png
 paginate: 5
 permalink: pretty
-cover_image: /assets/image/main_bg.jpg
+cover_image: /assets/image/main_bg.svg
 
 # Gems
 plugins:

@@ -1,7 +1,7 @@
 ---
 layout: page
 title: About me
-cover_image: /assets/image/sec_bg.jpeg
+cover_image: /assets/image/sec_bg.svg
 permalink: /about/
 ---
 
