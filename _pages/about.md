@@ -5,7 +5,7 @@ cover_image: /assets/image/sec_bg.svg
 permalink: /about/
 ---
 
-I am presently a Ph.D. student at the Institute of Physics, Chinese Academy of Sciences, supervised by [Heng Fan][heng-fan] and [Kai Xu][kai-xu].
+I am presently a Ph.D. student at the Institute of Physics, Chinese Academy of Sciences, supervised by Prof. [Heng Fan][heng-fan] and Prof. [Kai Xu][kai-xu].
 
 At this juncture, I am actively exploring my research interests, and while I think I am not gifted at all. My potential academic pursuits revolve around Quantum Information Dynamics, Quantum Computation employing Tensor Network methodologies, and their synergistic integration with deep learning techniques.
 

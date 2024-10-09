@@ -1,4 +1,6 @@
-- title: Blog
-  url: /
 - title: About Me
   url: /about/
+- title: Blog
+  url: /
+- title: Photograph
+  url: /photo/
