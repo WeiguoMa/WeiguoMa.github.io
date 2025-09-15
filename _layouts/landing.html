@@ -6,6 +6,7 @@ layout: null
   {% include head.html %}
   <link rel="stylesheet" href="{{ '/assets/landing.css' | relative_url }}">
   <link rel="stylesheet" href="{{ '/assets/terminal-tabs.css' | relative_url }}">
+
   <body class="landing">
     <main class="landing-wrap">
       <section class="hero">
@@ -14,16 +15,20 @@ layout: null
           <p class="tagline">{{ site.description | default: 'Personal site' }}</p>
           {% include terminal-tabs.html %}
           <div class="cta">
+            <a class="btn" href="{{ '/about/' | relative_url }}">About</a>
             <a class="btn" href="{{ '/blog/' | relative_url }}">Blog</a>
             <a class="btn" href="{{ '/photograph/' | relative_url }}">Photograph</a>
+<!--            <a class="btn" href="{{ '/counts/' | relative_url }}">Counts</a>-->
           </div>
         </div>
       </section>
     </main>
 
     <script defer src="{{ '/assets/terminal-tabs.js' | relative_url }}"></script>
+
     {%- if jekyll.environment == 'production' and site.google_analytics -%}
       {%- include google-analytics.html -%}
     {%- endif -%}
   </body>
+
 </html>
