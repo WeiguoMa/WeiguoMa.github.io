@@ -24,7 +24,9 @@
   }
 }
 
-.ttabs { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; }
+.ttabs {
+  font-family: Arial, Helvetica, sans-serif;
+}
 .ttabs-header { display:flex; gap:.5rem; flex-wrap:wrap; margin: .5rem 0 0.75rem; }
 .ttab { border:1px solid var(--tt-border); background:var(--tt-panel); color:var(--tt-text);
   padding:.4rem .75rem; border-radius:10px; cursor:pointer; font-size:.9rem; transition:all .15s ease; }
@@ -39,7 +41,7 @@
   display: flex;              /* fix: prevent vertical growth */
   flex-direction: column;
   height: 380px;              /* fixed total height of the terminal box */
-  width: 78ch;                /* fixed width ≈ 72 monospace characters */
+  width: 80ch;                /* fixed width ≈ 72 monospace characters */
   max-width: 100%;            /* allow shrink on very small screens */
 }
 .ttopbar { display:flex; align-items:center; justify-content:space-between; padding:.4rem .6rem; border-bottom:1px solid var(--tt-border); background: color-mix(in oklab, var(--tt-panel) 75%, var(--tt-bg)); }
@@ -52,8 +54,7 @@
 .tbtn:hover { color:var(--tt-text); border-color: var(--tt-accent); }
 
 .tscreen {
-  /* height: 320px;  <-- remove fixed screen height */
-  flex: 1;                     /* take remaining space inside .tterminal */
+  flex: 1;
   min-height: 0;               /* allow scrolling instead of growing */
   overflow: auto;
   overflow-x: hidden;         /* avoid horizontal scrollbar / width jump */
@@ -62,8 +63,10 @@
   margin: 0;
   padding: 1rem;
   color: var(--tt-text);
-  white-space: pre-wrap;
   outline: none;
+  font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+  white-space: pre;
+  line-height: 1.3;
 }
 
 .tscreen::-webkit-scrollbar { height:8px; width:8px; }
