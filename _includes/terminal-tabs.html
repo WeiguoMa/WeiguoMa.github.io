@@ -1,16 +1,11 @@
 <!-- _includes/terminal-tabs.html -->
 <div class="ttabs" data-typing-speed="28" data-token-jitter="0.25">
   <div class="ttabs-header" role="tablist">
-    <!-- 每个 tab 的内容放在 data-lines 里（JSON 数组）。可换行、含 Markdown 风味符号。 -->
-    <button class="ttab active" role="tab" aria-selected="true" data-id="research"
-      data-lines='[
-        "Initializing research stack...",
-        "Model: llama-3.1-70b-instruct | Temperature: 0.2 | TopP: 0.9",
-        "\n> Q: What are you working on?",
-        "A: Multi-modal retrieval + long-context summarization for academic notes.",
-        "- Hybrid sparse+dense index (bm25 + e5)\n- Sliding-window RAG with citations\n- Distillation to small local model",
-        "\nStatus: ✅ Prototype done | 🚀 Writing blog post"
-      ]'>Research</button>
+    <button class="ttab active" data-id="about-me"
+    data-lines="Hi, This is Weiguo Ma.&#10;&#10;
+                Research graduate @Institute of Physics, Chinese Academy of Sciences.">
+    About
+  </button>
 
     <button class="ttab" role="tab" aria-selected="false" data-id="projects"
       data-lines='[

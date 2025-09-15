@@ -1,6 +1,6 @@
-- title: About Me
-  url: /about/
-- title: Blog
+- title: Home
   url: /
+- title: Blog
+  url: /blog/
 - title: Photograph
-  url: /photo/
+  url: /photograph/

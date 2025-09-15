@@ -1,7 +1,9 @@
 ---
 layout: default
 ---
-{% include home-header.html %}
+<header class="page-header" style="padding:1.25rem 1rem;">
+  <h1 style="margin:0;">{{ page.title | default: 'Archive' }}</h1>
+</header>
 
 {{ content }}
 

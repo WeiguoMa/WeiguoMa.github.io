@@ -1,0 +1,27 @@
+/* 全屏简洁 Hero + 居中内容，与原主题隔离 */
+:root {
+  --ld-bg: #0b0e14;
+  --ld-fg: #e6edf3;
+  --ld-dim: #9aa4ae;
+}
+@media (prefers-color-scheme: light){
+  :root { --ld-bg:#ffffff; --ld-fg:#1f2328; --ld-dim:#6e7781; }
+}
+
+body.landing { margin:0; background: radial-gradient(1200px 400px at 20% -10%, rgba(96,165,250,.12), transparent),
+                                 radial-gradient(1000px 600px at 80% 110%, rgba(16,185,129,.12), transparent),
+                                 var(--ld-bg);
+  color:var(--ld-fg); font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, 'Apple Color Emoji','Segoe UI Emoji'; }
+
+.landing-wrap { min-height: 100dvh; display:grid; place-items:center; padding: 4rem 1rem; }
+.hero-inner { max-width: 960px; width:100%; }
+.brand { font-size: clamp(2rem, 3.8vw, 3rem); margin: 0 0 .25rem; letter-spacing: .2px; }
+.tagline { margin: 0 0 1.25rem; color: var(--ld-dim); }
+
+/* 让终端与品牌区有呼吸感 */
+.ttabs{ margin-top: 1rem; }
+
+.cta { display:flex; gap:.75rem; margin-top: 1rem; }
+.btn { display:inline-block; padding:.6rem 1rem; border-radius:12px; border:1px solid rgba(255,255,255,.14);
+  color:var(--ld-fg); text-decoration:none; background:rgba(255,255,255,.04); backdrop-filter:saturate(140%) blur(6px); }
+.btn:hover{ transform: translateY(-1px); box-shadow: 0 8px 24px rgba(0,0,0,.12); }

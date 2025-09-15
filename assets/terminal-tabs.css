@@ -1,0 +1,82 @@
+/* assets/terminal-tabs.css */
+:root {
+  --tt-bg: #0b0e14;
+  --tt-panel: #0f131a;
+  --tt-text: #e6edf3;
+  --tt-dim: #9aa4ae;
+  --tt-accent: #7aa2f7;
+  --tt-green: #98c379;
+  --tt-yellow: #e5c07b;
+  --tt-red: #e06c75;
+  --tt-border: #1b2230;
+}
+@media (prefers-color-scheme: light) {
+  :root {
+    --tt-bg: #ffffff;
+    --tt-panel: #f7f8fa;
+    --tt-text: #1f2328;
+    --tt-dim: #6e7781;
+    --tt-accent: #3867d6;
+    --tt-green: #2ea043;
+    --tt-yellow: #9a6700;
+    --tt-red: #d1242f;
+    --tt-border: #e6ebf1;
+  }
+}
+
+.ttabs { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; }
+.ttabs-header { display:flex; gap:.5rem; flex-wrap:wrap; margin: .5rem 0 0.75rem; }
+.ttab { border:1px solid var(--tt-border); background:var(--tt-panel); color:var(--tt-text);
+  padding:.4rem .75rem; border-radius:10px; cursor:pointer; font-size:.9rem; transition:all .15s ease; }
+.ttab:hover { transform: translateY(-1px); box-shadow:0 4px 14px rgba(0,0,0,.06); }
+.ttab.active { border-color: var(--tt-accent); box-shadow:0 0 0 2px color-mix(in oklab, var(--tt-accent) 25%, transparent); }
+
+.tterminal {
+  border: 1px solid var(--tt-border);
+  border-radius: 14px;
+  background: linear-gradient(180deg, var(--tt-panel), var(--tt-bg));
+  overflow: hidden;
+  display: flex;              /* fix: prevent vertical growth */
+  flex-direction: column;
+  height: 380px;              /* fixed total height of the terminal box */
+  width: 78ch;                /* fixed width ≈ 72 monospace characters */
+  max-width: 100%;            /* allow shrink on very small screens */
+}
+.ttopbar { display:flex; align-items:center; justify-content:space-between; padding:.4rem .6rem; border-bottom:1px solid var(--tt-border); background: color-mix(in oklab, var(--tt-panel) 75%, var(--tt-bg)); }
+.ttraffic { display:flex; gap:.4rem; align-items:center; }
+.dot { width:.75rem; height:.75rem; border-radius:50%; display:inline-block; opacity:.9; }
+.dot.red{ background:#ff5f56; } .dot.yellow{ background:#ffbd2e; } .dot.green{ background:#27c93f; }
+
+.tcontrols { display:flex; gap:.3rem; }
+.tbtn { background:transparent; border:1px solid var(--tt-border); color:var(--tt-dim); border-radius:8px; padding:.2rem .45rem; cursor:pointer; font-size:.9rem; }
+.tbtn:hover { color:var(--tt-text); border-color: var(--tt-accent); }
+
+.tscreen {
+  /* height: 320px;  <-- remove fixed screen height */
+  flex: 1;                     /* take remaining space inside .tterminal */
+  min-height: 0;               /* allow scrolling instead of growing */
+  overflow: auto;
+  overflow-x: hidden;         /* avoid horizontal scrollbar / width jump */
+  word-break: break-word;     /* break long tokens */
+  overflow-wrap: anywhere;    /* wrap anywhere if needed */
+  margin: 0;
+  padding: 1rem;
+  color: var(--tt-text);
+  white-space: pre-wrap;
+  outline: none;
+}
+
+.tscreen::-webkit-scrollbar { height:8px; width:8px; }
+.tscreen::-webkit-scrollbar-thumb { background: color-mix(in oklab, var(--tt-accent) 50%, var(--tt-bg)); border-radius:8px; }
+
+.tstatus { display:flex; align-items:center; gap:.5rem; border-top:1px solid var(--tt-border); padding:.35rem .6rem; color:var(--tt-dim); font-size:.85rem; }
+.tcursor { width:10px; height:1.1rem; background:var(--tt-text); opacity:.8; display:inline-block; animation:blink 1s step-end infinite; border-radius:2px; }
+@keyframes blink { 50% { opacity:.1; } }
+
+/* Markdown-ish styling inside terminal */
+.tscreen em { color: var(--tt-yellow); font-style: italic; }
+.tscreen strong { color: var(--tt-green); font-weight: 700; }
+.tscreen code { background: color-mix(in oklab, var(--tt-bg) 80%, #000); padding:.1rem .25rem; border-radius:4px; }
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) { .tcursor { animation:none; } }

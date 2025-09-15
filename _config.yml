@@ -3,17 +3,16 @@ title: Weiguo Ma
 description: 事以密成，言以泄败
 url: https://WeiguoMa.github.io
 avatar: /assets/image/avatar.png
-paginate: 5
 permalink: pretty
 cover_image: /assets/image/main_bg.svg
 
 # Gems
 plugins:
   - jekyll-gist
-  - jekyll-paginate
   - jekyll-seo-tag
   - jekyll-feed
   - jekyll-sitemap
+  - jekyll-paginate-v2
 
 # Optimize Jekyll
 exclude:
@@ -60,3 +59,12 @@ author:
   name: Weiguo Ma
   url: https://github.com/WeiguoMa/
   email: david.mawg@gmail.com
+
+
+pagination:
+  enabled: true
+  per_page: 5
+  title: ':title - page :num'
+  trail:
+    before: 1
+    after: 1
