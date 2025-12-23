@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home | Weiguo Ma</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600&family=Inter:wght@300;400;700&display=swap');
+
+        /* 定义 CSS 变量 */
+        :root {
+            --color-bg: #050505;
+            --color-text: #e0e0e0;
+            --color-cyan: #00f3ff;
+            --color-purple: #bc13fe;
+            --color-prompt: #27c93f;
+            --glass-bg: rgba(10, 15, 30, 0.65);
+            --glass-border: rgba(0, 243, 255, 0.15);
+            --shadow-color: rgba(0, 0, 0, 0.5);
+            --glow-color: rgba(0, 243, 255, 0.05);
+            --terminal-header-bg: rgba(0, 0, 0, 0.4);
+
+            /* 按钮配色变量 */
+            --btn-bg: rgba(255, 255, 255, 0.03);
+            --btn-border: rgba(255, 255, 255, 0.2);
+            --btn-hover-bg: rgba(0, 243, 255, 0.1);
+            --btn-hover-border: var(--color-cyan);
+            --btn-text: #fff;
+        }
+
+        [data-theme="light"] {
+            --color-bg: #f0f2f5;
+            --color-text: #1f2937;
+            --color-cyan: #007acc;
+            --color-purple: #7c3aed;
+            --color-prompt: #16a34a;
+            --glass-bg: rgba(255, 255, 255, 0.75);
+            --glass-border: rgba(0, 0, 0, 0.1);
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --glow-color: rgba(0, 122, 204, 0.1);
+            --terminal-header-bg: rgba(230, 230, 230, 0.5);
+
+            /* 浅色模式下的按钮适配 */
+            --btn-bg: rgba(0, 0, 0, 0.03);
+            --btn-border: rgba(0, 0, 0, 0.15);
+            --btn-hover-bg: rgba(0, 122, 204, 0.1);
+            --btn-hover-border: var(--color-cyan);
+            --btn-text: #333;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: var(--color-bg);
+            font-family: 'Inter', system-ui, -apple-system, "Microsoft YaHei", sans-serif;
+            color: var(--color-text);
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        #canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        /* Loading Overlay 文字 */
+        #loading-text {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--color-cyan);
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            z-index: 5;
+            opacity: 0;
+            letter-spacing: 3px;
+            pointer-events: none;
+            transition: all 0.5s ease;
+            text-shadow: 0 0 10px var(--color-cyan);
+        }
+
+        .theme-toggle {
+            position: absolute;
+            top: 30px;
+            right: 40px;
+            z-index: 50;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--color-text);
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            opacity: 0;
+            animation: uiFadeIn 1s ease-out 3s forwards;
+        }
+        .theme-toggle:hover {
+            transform: rotate(15deg);
+            box-shadow: 0 0 15px var(--glow-color);
+            border-color: var(--color-cyan);
+        }
+
+        /* 主布局容器 - 初始隐藏，等待爆炸 */
+        #main-layout {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            width: 100%;
+            height: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px;
+            box-sizing: border-box;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+            opacity: 0;
+            animation: uiFadeIn 2s ease-out 2.2s forwards;
+        }
+
+        @keyframes uiFadeIn {
+            from { opacity: 0; transform: translateY(20px) scale(0.98); filter: blur(5px); }
+            to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+        }
+
+        /* 左侧信息栏 */
+        .profile-section {
+            flex: 0 0 40%;
+            padding: 20px;
+        }
+
+        /* Glitch Title */
+        .name-title {
+            position: relative;
+            font-size: 4rem;
+            font-weight: 400;
+            margin-bottom: 0.5rem;
+            color: var(--color-text);
+            letter-spacing: -2px;
+            display: inline-block;
+            transition: color 0.5s ease;
+        }
+
+        :root:not([data-theme="light"]) .name-title {
+            background: linear-gradient(135deg, #fff 0%, #a5a5a5 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .name-title::before, .name-title::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            color: var(--color-text);
+            -webkit-text-fill-color: var(--color-text);
+            transition: all 0.5s ease;
+        }
+
+        .name-title::before {
+            left: 2px;
+            text-shadow: -1px 0 var(--color-cyan);
+            clip-path: inset(0 0 0 0);
+            animation: glitch-anim-1 3s infinite linear alternate-reverse;
+            z-index: -1;
+            opacity: 0.7;
+        }
+
+        .name-title::after {
+            left: -2px;
+            text-shadow: -1px 0 var(--color-purple);
+            clip-path: inset(0 0 0 0);
+            animation: glitch-anim-2 2.5s infinite linear alternate-reverse;
+            z-index: -2;
+            opacity: 0.7;
+        }
+
+        @keyframes glitch-anim-1 {
+            0% { clip-path: inset(80% 0 2% 0); transform: translate(-2px, 1px); }
+            5% { clip-path: inset(10% 0 80% 0); transform: translate(2px, -1px); }
+            10% { clip-path: inset(50% 0 30% 0); transform: translate(-1px, 2px); }
+            15% { clip-path: inset(10% 0 80% 0); transform: translate(1px, -1px); }
+            20% { clip-path: inset(0 0 0 0); transform: translate(0, 0); }
+            100% { clip-path: inset(0 0 0 0); transform: translate(0, 0); }
+        }
+        @keyframes glitch-anim-2 {
+            0% { clip-path: inset(10% 0 60% 0); transform: translate(2px, -1px); }
+            5% { clip-path: inset(80% 0 5% 0); transform: translate(-2px, 1px); }
+            10% { clip-path: inset(30% 0 20% 0); transform: translate(1px, -2px); }
+            15% { clip-path: inset(10% 0 40% 0); transform: translate(-1px, 1px); }
+            20% { clip-path: inset(0 0 0 0); transform: translate(0, 0); }
+            100% { clip-path: inset(0 0 0 0); transform: translate(0, 0); }
+        }
+
+        .subtitle {
+            font-size: 1.35rem;
+            font-family: 'Fira Code', "Microsoft YaHei", sans-serif;
+            font-weight: 600;
+            margin-bottom: 2rem; /* 稍微减小间距，给描述腾位置 */
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            background: linear-gradient(90deg, var(--color-cyan) 0%, var(--color-purple) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 2px rgba(0, 243, 255, 0.3));
+        }
+
+        /* 新增：优化后的简介文字样式 */
+        .intro-text {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: var(--color-text);
+            opacity: 0.75; /* 略微透明的灰白色，不抢眼 */
+            margin-bottom: 2.5rem;
+            max-width: 480px;
+            font-weight: 300;
+        }
+
+        .intro-highlight {
+            color: #fff;
+            font-weight: 500;
+            opacity: 1;
+        }
+
+        [data-theme="light"] .intro-highlight {
+            color: #000;
+        }
+
+        .button-container { display: flex; gap: 15px; flex-wrap: wrap; }
+
+        .academic-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 24px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--btn-text);
+            background: var(--btn-bg);
+            border: 1px solid var(--btn-border);
+            border-radius: 6px;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(4px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .academic-btn i {
+            font-size: 1.1rem;
+            color: var(--color-cyan);
+            transition: transform 0.3s ease;
+        }
+
+        .academic-btn:hover {
+            border-color: var(--btn-hover-border);
+            background: var(--btn-hover-bg);
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(0, 243, 255, 0.2);
+        }
+
+        .academic-btn:hover i {
+            transform: scale(1.1);
+            color: #fff;
+        }
+
+        /* Right Terminal */
+        .terminal-section { flex: 1; height: 70vh; display: flex; align-items: center; justify-content: center; }
+        .terminal-window {
+            width: 100%; height: 100%; background: var(--glass-bg);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 20px 50px var(--shadow-color), 0 0 20px var(--glow-color);
+            border-radius: 12px; display: flex; flex-direction: column;
+            overflow: hidden; transition: all 0.5s ease;
+        }
+        .terminal-window:focus-within { border-color: var(--color-cyan); }
+        .terminal-header {
+            background: var(--terminal-header-bg); padding: 12px 16px;
+            display: flex; align-items: center; border-bottom: 1px solid var(--glass-border);
+            flex-shrink: 0; transition: background 0.5s ease;
+        }
+        .window-controls { display: flex; gap: 8px; }
+        .control { width: 12px; height: 12px; border-radius: 50%; }
+        .close { background-color: #ff5f56; }
+        .minimize { background-color: #ffbd2e; }
+        .maximize { background-color: #27c93f; }
+        .terminal-title { margin-left: 16px; font-family: 'Fira Code', monospace; font-size: 0.85rem; color: var(--color-text); opacity: 0.6; }
+        .terminal-body {
+            flex: 1; padding: 24px; font-family: 'Fira Code', monospace;
+            font-size: 0.95rem; overflow-y: auto; color: var(--color-text); cursor: text;
+        }
+        #cmd-input { opacity: 0; position: absolute; width: 0; height: 0; }
+        .output-line { margin-bottom: 6px; line-height: 1.6; word-wrap: break-word; transition: color 0.1s, opacity 0.5s; }
+
+        .cmd-result { margin: 10px 0 20px 0; padding-left: 10px; border-left: 2px solid var(--glass-border); }
+        .result-section-title { color: var(--color-text); font-weight: 700; margin-bottom: 8px; border-bottom: 1px dashed var(--glass-border); padding-bottom: 4px; display: inline-block; }
+        .result-item { margin-bottom: 12px; }
+        .result-key { color: var(--color-purple); font-weight: 600; min-width: 80px; display: inline-block; }
+        .result-val { color: var(--color-text); }
+        .result-link { color: var(--color-cyan); text-decoration: none; border-bottom: 1px dotted var(--color-cyan); }
+        .result-link:hover { background: var(--btn-hover); }
+
+        .prompt-line { display: flex; flex-wrap: wrap; align-items: center; margin-top: 10px; }
+        .prompt { color: var(--color-prompt); margin-right: 8px; font-weight: 600; }
+        .path { color: var(--color-cyan); }
+        .command-text { color: var(--color-text); margin-left: 8px; white-space: pre-wrap; font-weight: 500;}
+        .command-placeholder { color: var(--color-text); opacity: 0.4; margin-left: 8px; font-style: italic; animation: pulse-gray 2s infinite; }
+        .cursor { display: inline-block; width: 9px; height: 18px; background-color: var(--color-text); opacity: 0.5; animation: blink 1s step-end infinite; vertical-align: text-bottom; margin-left: 2px; }
+        .keyword { color: var(--color-purple); font-weight: bold; }
+        .string { color: #f59e0b; }
+        [data-theme="light"] .string { color: #d97706; }
+        .glitched { color: var(--color-prompt) !important; text-shadow: 2px 0 var(--color-purple), -2px 0 var(--color-cyan); }
+
+        @keyframes pulse-gray { 0%, 100% { opacity: 0.3; } 50% { opacity: 0.6; } }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        @media (max-width: 768px) {
+            #main-layout { flex-direction: column; padding: 20px; gap: 20px; height: auto; overflow-y: auto; }
+            .profile-section { flex: none; width: 100%; padding: 0; display: flex; flex-direction: column; align-items: center; }
+            .subtitle { justify-content: center; text-align: center; }
+            .intro-text { text-align: justify; width: 100%; max-width: 450px; }
+            .button-container { justify-content: center; }
+            .terminal-section { flex: none; width: 100%; height: 500px; }
+            .name-title { font-size: 2.5rem; }
+            .theme-toggle { top: 10px; right: 10px; }
+            body { overflow-y: auto; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 主题切换按钮 -->
+    <button class="theme-toggle" id="theme-btn" title="Toggle Theme">
+        <i class="ri-moon-line" id="theme-icon"></i>
+    </button>
+
+    <!-- 开场文字 -->
+    <div id="loading-text">INITIALIZING WAVE FUNCTION...</div>
+
+    <div id="canvas-container">
+        <canvas id="bg-canvas"></canvas>
+    </div>
+
+    <div id="main-layout">
+        <!-- 左侧：个人信息 -->
+        <section class="profile-section">
+            <h1 class="name-title" data-text="Weiguo Ma">Weiguo Ma</h1>
+            <!-- 修改后的中文副标题 -->
+            <div class="subtitle">事以密成，言以泄败</div>
+
+            <!-- 修改后的简介文字 -->
+            <div class="intro-text">
+                Salty fish in physics
+            </div>
+
+            <div class="button-container">
+                <a href="about/" class="academic-btn"><i class="ri-user-smile-line"></i> About</a>
+                <a href="research/" class="academic-btn"><i class="ri-flask-line"></i> Research</a>
+                <a href="blog/" class="academic-btn"><i class="ri-article-line"></i> Blog</a>
+            </div>
+        </section>
+
+        <!-- 右侧：交互式 Terminal -->
+        <section class="terminal-section">
+            <div class="terminal-window" id="terminal-window">
+                <div class="terminal-header">
+                    <div class="window-controls">
+                        <div class="control close"></div>
+                        <div class="control minimize"></div>
+                        <div class="control maximize"></div>
+                    </div>
+                    <div class="terminal-title">guest@weiguoma-lab:~</div>
+                </div>
+
+                <div class="terminal-body" id="terminal-body">
+                    <div class="output-line">Welcome to my Research Terminal v1.0.0</div>
+                    <br>
+                    <div id="input-line" class="prompt-line">
+                        <span class="prompt"><span class="path">~</span></span>
+                        <span id="cmd-display" class="command-text"></span>
+                        <span id="cmd-placeholder" class="command-placeholder">Type 'help' to see available commands...</span>
+                        <span class="cursor"></span>
+                    </div>
+                </div>
+                <input type="text" id="cmd-input" autocomplete="off" spellcheck="false">
+            </div>
+        </section>
+    </div>
+
+<script>
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+    const loadingText = document.getElementById('loading-text');
+    let width, height;
+    let particles = [];
+
+    // 动画状态： CLOUD (电子云) -> EXPLODE (爆炸) -> IDLE (稳定漂浮)
+    let animState = 'CLOUD';
+    let explosionTime = 0;
+
+    // 颜色配置
+    const themeColors = {
+        dark: { c1: {r:0, g:243, b:255}, c2: {r:188, g:19, b:254} }, // Cyan & Purple
+        light: { c1: {r:0, g:122, b:204}, c2: {r:124, g:58, b:237} } // Deep Blue & Violet
+    };
+
+    let currentTheme = 'dark';
+
+    const config = {
+        // 根据屏幕大小适配粒子数量
+        count: window.innerWidth < 768 ? 60 : 100,
+        connRadius: 180,
+        mouseRadius: 140,
+        mouseForce: 0.02, // 鼠标力度调低
+        baseSpeed: 0.45,  // 粒子漂浮速度
+        separationDist: 60, // 粒子间的安全距离
+        separationForce: 0.002 // 粒子间的排斥力度
+    };
+
+    let mouse = { x: -999, y: -999 };
+
+    function resize() {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+    }
+
+    window.addEventListener('resize', resize);
+    document.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+    resize();
+
+    class Particle {
+        constructor(index) {
+            this.index = index;
+            // 初始：高斯分布的电子云
+            const u = 1 - Math.random();
+            const v = Math.random();
+            const z = Math.sqrt( -2.0 * Math.log( u ) ) * Math.cos( 2.0 * Math.PI * v );
+            const radius = z * (Math.min(width, height) * 0.12);
+
+            const angle = Math.random() * Math.PI * 2;
+            this.x = width/2 + Math.cos(angle) * radius;
+            this.y = height/2 + Math.sin(angle) * radius;
+
+            // 轨道速度
+            const velocityMag = 2.0;
+            this.vx = -Math.sin(angle) * velocityMag;
+            this.vy = Math.cos(angle) * velocityMag;
+
+            this.size = Math.random() * 2 + 1.5;
+            this.phase = Math.random();
+            this.alpha = 1;
+        }
+
+        update() {
+            if (animState === 'CLOUD') {
+                // 电子云轨道
+                const centerX = width/2;
+                const centerY = height/2;
+                const dx = centerX - this.x;
+                const dy = centerY - this.y;
+
+                this.vx += dx * 0.001;
+                this.vy += dy * 0.001;
+
+                // 量子涨落
+                this.vx += (Math.random()-0.5) * 0.2;
+                this.vy += (Math.random()-0.5) * 0.2;
+
+                this.x += this.vx;
+                this.y += this.vy;
+
+            } else if (animState === 'EXPLODE') {
+                // 爆炸力
+                const centerX = width / 2;
+                const centerY = height / 2;
+                const dx = this.x - centerX;
+                const dy = this.y - centerY;
+                const dist = Math.sqrt(dx*dx + dy*dy) + 1;
+
+                const force = 50 / (dist + 50);
+                this.vx += (dx / dist) * force * 4;
+                this.vy += (dy / dist) * force * 4;
+
+                // 限制最大速度，防止飞太远
+                const maxV = 15;
+                if (Math.abs(this.vx) > maxV) this.vx = (this.vx / Math.abs(this.vx)) * maxV;
+                if (Math.abs(this.vy) > maxV) this.vy = (this.vy / Math.abs(this.vy)) * maxV;
+
+                this.x += this.vx;
+                this.y += this.vy;
+
+            } else if (animState === 'IDLE') {
+                // 回归经典的物理逻辑
+
+                // 1. 稍微减速，接近 baseSpeed
+                const speed = Math.sqrt(this.vx*this.vx + this.vy*this.vy);
+                if (speed > config.baseSpeed) {
+                    this.vx *= 0.96; // 阻尼
+                    this.vy *= 0.96;
+                } else if (speed < config.baseSpeed * 0.5) {
+                    // 防止太慢
+                    this.vx += (Math.random()-0.5) * 0.05;
+                    this.vy += (Math.random()-0.5) * 0.05;
+                }
+
+                // 2. 增加粒子间相互作用 (防重叠)
+                for (let j = 0; j < particles.length; j++) {
+                    if (this.index === j) continue;
+                    const p2 = particles[j];
+                    const dx = this.x - p2.x;
+                    const dy = this.y - p2.y;
+                    const dist = Math.sqrt(dx*dx + dy*dy);
+
+                    if (dist < config.separationDist && dist > 0) {
+                        const force = (config.separationDist - dist) / config.separationDist;
+                        this.vx += (dx/dist) * force * config.separationForce;
+                        this.vy += (dy/dist) * force * config.separationForce;
+                    }
+                }
+
+                this.x += this.vx;
+                this.y += this.vy;
+
+                // 3. 经典的边界反弹 (最稳定，不堆积)
+                if (this.x < 0 || this.x > width) {
+                    this.vx *= -1;
+                    this.x = Math.max(0, Math.min(width, this.x));
+                }
+                if (this.y < 0 || this.y > height) {
+                    this.vy *= -1;
+                    this.y = Math.max(0, Math.min(height, this.y));
+                }
+
+                // 4. 鼠标交互
+                let dx = mouse.x - this.x;
+                let dy = mouse.y - this.y;
+                let dist = Math.sqrt(dx*dx + dy*dy);
+                if (dist < config.mouseRadius) {
+                    const force = (config.mouseRadius - dist) / config.mouseRadius;
+                    // 柔和的排斥力
+                    const repelStrength = config.mouseForce * 5;
+                    this.vx -= (dx/dist) * force * repelStrength;
+                    this.vy -= (dy/dist) * force * repelStrength;
+                }
+            }
+        }
+
+        draw() {
+            const colors = themeColors[currentTheme];
+            const isCloud = animState === 'CLOUD';
+
+            if (isCloud) {
+                // 电子云特效：中心亮白，边缘带色
+                const dx = this.x - width/2;
+                const dy = this.y - height/2;
+                const dist = Math.sqrt(dx*dx + dy*dy);
+                const rFactor = Math.min(dist / (Math.min(width, height)*0.2), 1);
+                const flicker = Math.random() > 0.9 ? 1 : 0.8;
+
+                if (rFactor < 0.3) {
+                    ctx.fillStyle = `rgba(220, 255, 255, ${this.alpha * flicker})`;
+                } else if (this.phase > 0.5) {
+                    ctx.fillStyle = `rgba(${colors.c1.r}, ${colors.c1.g}, ${colors.c1.b}, ${this.alpha * 0.9 * flicker})`;
+                } else {
+                    ctx.fillStyle = `rgba(${colors.c2.r}, ${colors.c2.g}, ${colors.c2.b}, ${this.alpha * 0.9 * flicker})`;
+                }
+
+                // 绘制云状态粒子
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI*2);
+                ctx.fill();
+            } else {
+                // IDLE 状态：微弱撕裂 (Tearing Effect)
+
+                // 基础颜色 (无闪烁)
+                ctx.fillStyle = this.phase > 0.5
+                    ? `rgba(${colors.c1.r},${colors.c1.g},${colors.c1.b},${this.alpha})`
+                    : `rgba(${colors.c2.r},${colors.c2.g},${colors.c2.b},${this.alpha})`;
+
+                // 随机触发撕裂 (概率较低，但视觉明显)
+                if (Math.random() > 0.96) { // 4% chance
+                    const tearRange = 4; // 减小撕裂幅度 (原 10 -> 4)
+                    // 随机方向计算
+                    const angle = Math.random() * Math.PI * 2;
+                    const dist = (Math.random() * 0.5 + 0.5) * tearRange; // 保证最小偏移量
+                    const offsetX = Math.cos(angle) * dist;
+                    const offsetY = Math.sin(angle) * dist;
+
+                    // 1. 绘制主体 (偏移后的位置)
+                    ctx.beginPath();
+                    ctx.arc(this.x + offsetX, this.y + offsetY, this.size, 0, Math.PI*2);
+                    ctx.fill();
+
+                    // 2. 绘制撕裂产生的“残影” (连接原点和新点的线)
+                    const r = this.phase > 0.5 ? colors.c1.r : colors.c2.r;
+                    const g = this.phase > 0.5 ? colors.c1.g : colors.c2.g;
+                    const b = this.phase > 0.5 ? colors.c1.b : colors.c2.b;
+
+                    ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, 0.3)`; // 稍微降低残影透明度
+                    ctx.lineWidth = 1.2;
+                    ctx.beginPath();
+                    ctx.moveTo(this.x, this.y);
+                    ctx.lineTo(this.x + offsetX, this.y + offsetY);
+                    ctx.stroke();
+                } else {
+                    // 正常绘制
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI*2);
+                    ctx.fill();
+                }
+            }
+        }
+    }
+
+    function initParticles() {
+        particles = [];
+        const count = window.innerWidth < 768 ? 60 : 100;
+        for(let i=0; i<count; i++) particles.push(new Particle(i));
+    }
+
+    function startAnimation() {
+        initParticles();
+        loadingText.style.opacity = 1; // 恢复文字显示
+
+        // 1. 电子云持续 2秒
+        setTimeout(() => {
+            animState = 'EXPLODE';
+            // 隐藏文字，让文字炸开并消失
+            loadingText.style.opacity = 0;
+            loadingText.style.transform = "translate(-50%, -50%) scale(1.5)";
+            loadingText.style.filter = "blur(10px)";
+            explosionTime = Date.now();
+        }, 2000);
+
+        requestAnimationFrame(loop);
+    }
+
+    function loop() {
+        ctx.clearRect(0, 0, width, height);
+        const colors = themeColors[currentTheme];
+
+        // EXPLODE -> IDLE 切换
+        if (animState === 'EXPLODE') {
+            // 爆炸持续 0.8秒后进入 IDLE
+            if (Date.now() - explosionTime > 800) {
+                animState = 'IDLE';
+            }
+        }
+
+        // 连线淡入逻辑
+        let showLines = false;
+        let lineOpacityFactor = 0;
+        if (animState === 'IDLE') {
+            const timeSinceExplosion = Date.now() - explosionTime;
+            // 稍微延迟一点显示连线，让粒子散开后再连
+            if (timeSinceExplosion > 1000) {
+                showLines = true;
+                lineOpacityFactor = Math.min((timeSinceExplosion - 1000) / 1000, 1);
+            }
+        }
+
+        particles.forEach((p, i) => {
+            p.update();
+            p.draw();
+
+            // 绘制连线 (仅在 IDLE 且淡入后)
+            if (showLines && lineOpacityFactor > 0.01) {
+                for(let j=i+1; j<particles.length; j++) {
+                    let p2 = particles[j];
+                    let dist = Math.hypot(p.x-p2.x, p.y-p2.y);
+
+                    if(dist < config.connRadius) {
+                        let op = 1 - dist/config.connRadius;
+                        // 乘上 fade factor
+                        op *= lineOpacityFactor;
+
+                        ctx.beginPath();
+                        let grad = ctx.createLinearGradient(p.x, p.y, p2.x, p2.y);
+                        // 连线透明度 (亮度调整为 0.2)
+                        let lineAlpha = op * 0.2;
+                        grad.addColorStop(0, `rgba(${colors.c1.r},${colors.c1.g},${colors.c1.b},${lineAlpha})`);
+                        grad.addColorStop(1, `rgba(${colors.c2.r},${colors.c2.g},${colors.c2.b},${lineAlpha})`);
+                        ctx.strokeStyle = grad;
+                        ctx.lineWidth = 1;
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        });
+        requestAnimationFrame(loop);
+    }
+
+    startAnimation();
+
+    /** * 2. 主题切换逻辑 */
+    const themeBtn = document.getElementById('theme-btn');
+    const themeIcon = document.getElementById('theme-icon');
+
+    themeBtn.addEventListener('click', () => {
+        if (currentTheme === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'light');
+            currentTheme = 'light';
+            themeIcon.className = 'ri-sun-line';
+        } else {
+            document.documentElement.removeAttribute('data-theme');
+            currentTheme = 'dark';
+            themeIcon.className = 'ri-moon-line';
+        }
+    });
+
+    /** * 3. 交互式 Terminal 逻辑 */
+    const terminalBody = document.getElementById('terminal-body');
+    const terminalWindow = document.getElementById('terminal-window');
+    const inputLine = document.getElementById('input-line');
+    const cmdInput = document.getElementById('cmd-input');
+    const cmdDisplay = document.getElementById('cmd-display');
+    const cmdPlaceholder = document.getElementById('cmd-placeholder');
+
+    const fileSystem = {
+        'about.txt': "Ph.D. student interested in Quantum ML and RL. \nBased in Metaverse.",
+        'projects': "1. Neural-Entanglement-Opt \n2. Stochastic-Gradient-Langevin",
+        'contact.md': "Email: weiguoma@example.com\nGithub: github.com/weiguoma"
+    };
+
+    // 格式化输出函数
+    const commands = {
+        'help': () => `
+            <div class="cmd-result">
+                <div class="result-section-title">Available Commands</div>
+                <div class="result-item"><span class="result-key">whoami</span> - Display profile summary</div>
+                <div class="result-item"><span class="result-key">research</span> - List research interests & papers</div>
+                <div class="result-item"><span class="result-key">contact</span> - Show contact information</div>
+                <div class="result-item"><span class="result-key">ls</span> - List files in current directory</div>
+                <div class="result-item"><span class="result-key">cat</span> - Read file content [filename]</div>
+                <div class="result-item"><span class="result-key">clear</span> - Clear the terminal screen</div>
+            </div>
+        `,
+        'whoami': () => `
+            <div class="cmd-result">
+                <div class="result-item"><span class="result-key">User:</span> Weiguo Ma</div>
+                <div class="result-item"><span class="result-key">Role:</span> Research Assistant</div>
+                <div class="result-item"><span class="result-key">Lab:</span> AI & Quantum Computing Lab</div>
+                <div class="result-item"><span class="result-key">Status:</span> <span style="color:var(--color-cyan)">Online & Coding...</span></div>
+            </div>
+        `,
+        'contact': () => `
+            <div class="cmd-result">
+                <div class="result-section-title">Contact Info</div>
+                <div class="result-item"><span class="result-key">Email:</span> <a href="mailto:weiguoma@university.edu" class="result-link">weiguoma@university.edu</a></div>
+                <div class="result-item"><span class="result-key">Github:</span> <a href="https://github.com/weiguoma" target="_blank" class="result-link">github.com/weiguoma</a></div>
+                <div class="result-item"><span class="result-key">Twitter:</span> <a href="#" class="result-link">@guoma_ai</a></div>
+            </div>
+        `,
+        'research': () => `
+            <div class="cmd-result">
+                <div class="result-section-title">Selected Publications</div>
+
+                <div class="result-item">
+                    <div style="margin-bottom:4px;">1. <span class="string">"Quantum Entanglement in Deep Neural Networks"</span></div>
+                    <div style="font-size:0.9em; opacity:0.8; margin-left:20px;">NeurIPS 2024 &middot; <span class="keyword">Oral Presentation</span></div>
+                    <div style="font-size:0.9em; opacity:0.7; margin-left:20px;">Proposed a qubit-inspired weight initialization method to accelerate convergence.</div>
+                </div>
+
+                <div class="result-item">
+                    <div style="margin-bottom:4px;">2. <span class="string">"Stochastic Optimization on Manifolds"</span></div>
+                    <div style="font-size:0.9em; opacity:0.8; margin-left:20px;">ICML 2023 &middot; <span class="keyword">Spotlight</span></div>
+                    <div style="font-size:0.9em; opacity:0.7; margin-left:20px;">Improved convergence rates for non-convex landscapes using Riemannian geometry.</div>
+                </div>
+            </div>
+        `,
+        'ls': () => {
+             const files = Object.keys(fileSystem).map(f => `<span class="path" style="margin-right:15px;">${f}</span>`).join('');
+             return `<div class="cmd-result">${files}</div>`;
+        },
+        'cat': (args) => {
+            if (!args) return `<div class="cmd-result" style="color:#ff5f56">Usage: cat [filename]</div>`;
+            if (fileSystem[args]) return `<div class="cmd-result" style="white-space: pre-wrap;">${fileSystem[args]}</div>`;
+            return `<div class="cmd-result" style="color:#ff5f56">cat: ${args}: No such file or directory</div>`;
+        },
+        'clear': () => 'CLEAR_SIGNAL'
+    };
+
+    let commandHistory = [];
+    let historyIndex = -1;
+    const glitchChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890@#$%^&*<>[]{}|;:";
+
+    terminalWindow.addEventListener('click', () => cmdInput.focus());
+
+    cmdInput.addEventListener('input', () => {
+        cmdDisplay.textContent = cmdInput.value;
+        if (cmdInput.value.length > 0) {
+            cmdPlaceholder.style.display = 'none';
+        } else {
+            cmdPlaceholder.style.display = 'inline';
+        }
+    });
+
+    cmdInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            const fullCmd = cmdInput.value.trim();
+            processCommand(fullCmd);
+            cmdInput.value = '';
+            cmdDisplay.textContent = '';
+            cmdPlaceholder.style.display = 'inline';
+        } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            if (historyIndex < commandHistory.length - 1) {
+                historyIndex++;
+                cmdInput.value = commandHistory[commandHistory.length - 1 - historyIndex];
+                cmdDisplay.textContent = cmdInput.value;
+                cmdPlaceholder.style.display = 'none';
+            }
+        } else if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            if (historyIndex > 0) {
+                historyIndex--;
+                cmdInput.value = commandHistory[commandHistory.length - 1 - historyIndex];
+                cmdDisplay.textContent = cmdInput.value;
+                cmdPlaceholder.style.display = 'none';
+            } else {
+                historyIndex = -1;
+                cmdInput.value = '';
+                cmdDisplay.textContent = '';
+                cmdPlaceholder.style.display = 'inline';
+            }
+        } else if (e.key === 'Tab') {
+            e.preventDefault();
+            const val = cmdInput.value;
+            const match = Object.keys(commands).find(c => c.startsWith(val));
+            if (match) {
+                cmdInput.value = match;
+                cmdDisplay.textContent = match;
+                cmdPlaceholder.style.display = 'none';
+            }
+        }
+    });
+
+    function scrambleAndRemove(element) {
+        if (!element || element.classList.contains('scrambling')) return;
+
+        element.classList.add('scrambling', 'glitched');
+        const originalText = element.innerText;
+        const textLength = Math.min(originalText.length, 50);
+        let iterations = 0;
+        const maxIterations = 10;
+
+        const interval = setInterval(() => {
+            let result = '';
+            for (let i = 0; i < textLength; i++) {
+                result += glitchChars.charAt(Math.floor(Math.random() * glitchChars.length));
+            }
+            element.innerText = result + (originalText.length > 50 ? '...' : '');
+            element.style.opacity = 1 - (iterations / maxIterations);
+
+            iterations++;
+            if (iterations >= maxIterations) {
+                clearInterval(interval);
+                element.remove();
+            }
+        }, 50);
+    }
+
+    function processCommand(rawCmd) {
+        if (!rawCmd) return;
+
+        commandHistory.push(rawCmd);
+        historyIndex = -1;
+
+        const oldLines = Array.from(terminalBody.querySelectorAll('.output-line, .cmd-result, div:not(#input-line)'));
+
+        oldLines.forEach(line => {
+            if (line.id === 'input-line' || line.tagName === 'SCRIPT') return;
+            scrambleAndRemove(line);
+        });
+
+        const args = rawCmd.split(' ');
+        const cmd = args[0].toLowerCase();
+        const arg = args[1];
+
+        let outputHtml;
+        if (commands[cmd]) {
+            outputHtml = commands[cmd](arg);
+        } else {
+            outputHtml = `<div class="cmd-result" style="color: #ff5f56">Command not found: ${cmd}. Type <span class="keyword">'help'</span> for list.</div>`;
+        }
+
+        if (outputHtml !== 'CLEAR_SIGNAL') {
+            setTimeout(() => {
+                printOutput(outputHtml, rawCmd);
+            }, 300);
+        }
+    }
+
+    function printOutput(html, cmd) {
+        const historyLine = document.createElement('div');
+        historyLine.className = 'output-line';
+        historyLine.innerHTML = `<span class="prompt"><span class="path">~</span></span> ${cmd}`;
+        terminalBody.insertBefore(historyLine, inputLine);
+
+        if (html) {
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = html;
+            while (tempDiv.firstChild) {
+                terminalBody.insertBefore(tempDiv.firstChild, inputLine);
+            }
+
+            const spacer = document.createElement('div');
+            spacer.style.height = '10px';
+            spacer.className = 'output-line';
+            terminalBody.insertBefore(spacer, inputLine);
+        }
+        terminalBody.scrollTop = terminalBody.scrollHeight;
+    }
+
+    setTimeout(() => {
+        cmdInput.focus();
+    }, 4500);
+
+</script>
+</body>
+</html>
