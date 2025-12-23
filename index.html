@@ -399,7 +399,7 @@
                     <div id="input-line" class="prompt-line">
                         <span class="prompt"><span class="path">~</span></span>
                         <span id="cmd-display" class="command-text"></span>
-                        <span id="cmd-placeholder" class="command-placeholder">Type 'help' to see available commands...</span>
+                        <span id="cmd-placeholder" class="command-placeholder">Type 'help' to find information...</span>
                         <span class="cursor"></span>
                     </div>
                 </div>
@@ -751,55 +751,47 @@
             <div class="cmd-result">
                 <div class="result-section-title">Available Commands</div>
                 <div class="result-item"><span class="result-key">whoami</span> - Display profile summary</div>
-                <div class="result-item"><span class="result-key">research</span> - List research interests & papers</div>
+                <div class="result-item"><span class="result-key">interests</span> - List research interests & papers</div>
                 <div class="result-item"><span class="result-key">contact</span> - Show contact information</div>
-                <div class="result-item"><span class="result-key">ls</span> - List files in current directory</div>
-                <div class="result-item"><span class="result-key">cat</span> - Read file content [filename]</div>
                 <div class="result-item"><span class="result-key">clear</span> - Clear the terminal screen</div>
             </div>
         `,
         'whoami': () => `
             <div class="cmd-result">
                 <div class="result-item"><span class="result-key">User:</span> Weiguo Ma</div>
-                <div class="result-item"><span class="result-key">Role:</span> Research Assistant</div>
-                <div class="result-item"><span class="result-key">Lab:</span> AI & Quantum Computing Lab</div>
+                <div class="result-item"><span class="result-key">Role:</span> Ph.D. Candidate</div>
+                <div class="result-item"><span class="result-key">Affiliation:</span> Institute of Physics, Chinese Academy of Sciences</div>
                 <div class="result-item"><span class="result-key">Status:</span> <span style="color:var(--color-cyan)">Online & Coding...</span></div>
             </div>
         `,
         'contact': () => `
             <div class="cmd-result">
                 <div class="result-section-title">Contact Info</div>
-                <div class="result-item"><span class="result-key">Email:</span> <a href="mailto:weiguoma@university.edu" class="result-link">weiguoma@university.edu</a></div>
+                <div class="result-item"><span class="result-key">Email:</span> <a href="mailto:david.mawg@gmail.com" class="result-link">david.mawg@gmail.com</a></div>
                 <div class="result-item"><span class="result-key">Github:</span> <a href="https://github.com/weiguoma" target="_blank" class="result-link">github.com/weiguoma</a></div>
-                <div class="result-item"><span class="result-key">Twitter:</span> <a href="#" class="result-link">@guoma_ai</a></div>
+                <div class="result-item"><span class="result-key">Scholar:</span> <a href="https://scholar.google.com/citations?user=BgKQ2UAAAAAJ&hl=en" class="result-link">BgKQ2UAAAAAJ</a></div>
             </div>
         `,
-        'research': () => `
+        'interests': () => `
             <div class="cmd-result">
-                <div class="result-section-title">Selected Publications</div>
+                <div class="result-section-title">Research Interests</div>
 
                 <div class="result-item">
-                    <div style="margin-bottom:4px;">1. <span class="string">"Quantum Entanglement in Deep Neural Networks"</span></div>
-                    <div style="font-size:0.9em; opacity:0.8; margin-left:20px;">NeurIPS 2024 &middot; <span class="keyword">Oral Presentation</span></div>
-                    <div style="font-size:0.9em; opacity:0.7; margin-left:20px;">Proposed a qubit-inspired weight initialization method to accelerate convergence.</div>
+                    <div style="margin-bottom:4px;">1. <span class="string">"Quantum Computation"</span></div>
+                    <div style="font-size:0.9em; opacity:0.8; margin-left:20px;">Tensor Networks, machine learning for quantum computing, hybrid quantum-classic computing.</div>
                 </div>
 
                 <div class="result-item">
-                    <div style="margin-bottom:4px;">2. <span class="string">"Stochastic Optimization on Manifolds"</span></div>
-                    <div style="font-size:0.9em; opacity:0.8; margin-left:20px;">ICML 2023 &middot; <span class="keyword">Spotlight</span></div>
-                    <div style="font-size:0.9em; opacity:0.7; margin-left:20px;">Improved convergence rates for non-convex landscapes using Riemannian geometry.</div>
+                    <div style="margin-bottom:4px;">2. <span class="string">"Non-equilibrium physics"</span></div>
+                    <div style="font-size:0.9em; opacity:0.8; margin-left:20px;">driven-dissipative Bose-hubbard model, time crystal, random circuits, mearsure/noise-induced phase transition.</div>
+                </div>
+
+                <div class="result-item">
+                    <div style="margin-bottom:4px;">3. <span class="string">"Many-body physics"</span></div>
+                    <div style="font-size:0.9em; opacity:0.8; margin-left:20px;">Solitons in Bose-hubbard model.</div>
                 </div>
             </div>
         `,
-        'ls': () => {
-             const files = Object.keys(fileSystem).map(f => `<span class="path" style="margin-right:15px;">${f}</span>`).join('');
-             return `<div class="cmd-result">${files}</div>`;
-        },
-        'cat': (args) => {
-            if (!args) return `<div class="cmd-result" style="color:#ff5f56">Usage: cat [filename]</div>`;
-            if (fileSystem[args]) return `<div class="cmd-result" style="white-space: pre-wrap;">${fileSystem[args]}</div>`;
-            return `<div class="cmd-result" style="color:#ff5f56">cat: ${args}: No such file or directory</div>`;
-        },
         'clear': () => 'CLEAR_SIGNAL'
     };
 
