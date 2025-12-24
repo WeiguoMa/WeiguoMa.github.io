@@ -3,14 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark light">
     <title>Home | Weiguo Ma</title>
+
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {},
+        },
+      }
+    </script>
+
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600&family=Inter:wght@300;400;700&display=swap');
 
-        /* 定义 CSS 变量 */
         :root {
+            color-scheme: dark;
+
             --color-bg: #050505;
             --color-text: #e0e0e0;
             --color-cyan: #00f3ff;
@@ -22,7 +34,6 @@
             --glow-color: rgba(0, 243, 255, 0.05);
             --terminal-header-bg: rgba(0, 0, 0, 0.4);
 
-            /* 按钮配色变量 */
             --btn-bg: rgba(255, 255, 255, 0.03);
             --btn-border: rgba(255, 255, 255, 0.2);
             --btn-hover-bg: rgba(0, 243, 255, 0.1);
@@ -31,6 +42,8 @@
         }
 
         [data-theme="light"] {
+            color-scheme: light;
+
             --color-bg: #f0f2f5;
             --color-text: #1f2937;
             --color-cyan: #007acc;
@@ -42,7 +55,6 @@
             --glow-color: rgba(0, 122, 204, 0.1);
             --terminal-header-bg: rgba(230, 230, 230, 0.5);
 
-            /* 浅色模式下的按钮适配 */
             --btn-bg: rgba(0, 0, 0, 0.03);
             --btn-border: rgba(0, 0, 0, 0.15);
             --btn-hover-bg: rgba(0, 122, 204, 0.1);
@@ -71,7 +83,6 @@
             z-index: 0;
         }
 
-        /* Loading Overlay 文字 */
         #loading-text {
             position: fixed;
             top: 50%;
@@ -118,7 +129,6 @@
             border-color: var(--color-cyan);
         }
 
-        /* 主布局容器 - 初始隐藏，等待爆炸 */
         #main-layout {
             position: relative;
             z-index: 10;
@@ -141,13 +151,11 @@
             to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
         }
 
-        /* 左侧信息栏 */
         .profile-section {
             flex: 0 0 40%;
             padding: 20px;
         }
 
-        /* Glitch Title */
         .name-title {
             position: relative;
             font-size: 4rem;
@@ -217,7 +225,7 @@
             font-size: 1.35rem;
             font-family: 'Fira Code', "Microsoft YaHei", sans-serif;
             font-weight: 600;
-            margin-bottom: 2rem; /* 稍微减小间距，给描述腾位置 */
+            margin-bottom: 2rem;
             display: flex;
             align-items: center;
             gap: 10px;
@@ -228,12 +236,11 @@
             filter: drop-shadow(0 0 2px rgba(0, 243, 255, 0.3));
         }
 
-        /* 新增：优化后的简介文字样式 */
         .intro-text {
             font-size: 1rem;
             line-height: 1.8;
             color: var(--color-text);
-            opacity: 0.75; /* 略微透明的灰白色，不抢眼 */
+            opacity: 0.75;
             margin-bottom: 2.5rem;
             max-width: 480px;
             font-weight: 300;
@@ -287,7 +294,6 @@
             color: #fff;
         }
 
-        /* Right Terminal */
         .terminal-section { flex: 1; height: 70vh; display: flex; align-items: center; justify-content: center; }
         .terminal-window {
             width: 100%; height: 100%; background: var(--glass-bg);
@@ -360,12 +366,10 @@
 </head>
 <body>
 
-    <!-- 主题切换按钮 -->
     <button class="theme-toggle" id="theme-btn" title="Toggle Theme">
         <i class="ri-moon-line" id="theme-icon"></i>
     </button>
 
-    <!-- 开场文字 -->
     <div id="loading-text">INITIALIZING WAVE FUNCTION...</div>
 
     <div id="canvas-container">
@@ -373,13 +377,10 @@
     </div>
 
     <div id="main-layout">
-        <!-- 左侧：个人信息 -->
         <section class="profile-section">
             <h1 class="name-title" data-text="Weiguo Ma">Weiguo Ma</h1>
-            <!-- 修改后的中文副标题 -->
             <div class="subtitle">事以密成，言以泄败</div>
 
-            <!-- 修改后的简介文字 -->
             <div class="intro-text">
                 Salty Fish in Physics
             </div>
@@ -391,7 +392,6 @@
             </div>
         </section>
 
-        <!-- 右侧：交互式 Terminal -->
         <section class="terminal-section">
             <div class="terminal-window" id="terminal-window">
                 <div class="terminal-header">
@@ -425,11 +425,9 @@
     let width, height;
     let particles = [];
 
-    // 动画状态： CLOUD (电子云) -> EXPLODE (爆炸) -> IDLE (稳定漂浮)
     let animState = 'CLOUD';
     let explosionTime = 0;
 
-    // 颜色配置
     const themeColors = {
         dark: { c1: {r:0, g:243, b:255}, c2: {r:188, g:19, b:254} }, // Cyan & Purple
         light: { c1: {r:0, g:122, b:204}, c2: {r:124, g:58, b:237} } // Deep Blue & Violet
@@ -438,14 +436,13 @@
     let currentTheme = 'dark';
 
     const config = {
-        // 根据屏幕大小适配粒子数量
         count: window.innerWidth < 768 ? 60 : 100,
         connRadius: 180,
         mouseRadius: 140,
-        mouseForce: 0.02, // 鼠标力度调低
-        baseSpeed: 0.45,  // 粒子漂浮速度
-        separationDist: 60, // 粒子间的安全距离
-        separationForce: 0.002 // 粒子间的排斥力度
+        mouseForce: 0.02,
+        baseSpeed: 0.45,
+        separationDist: 60,
+        separationForce: 0.002
     };
 
     let mouse = { x: -999, y: -999 };
@@ -462,7 +459,6 @@
     class Particle {
         constructor(index) {
             this.index = index;
-            // 初始：高斯分布的电子云
             const u = 1 - Math.random();
             const v = Math.random();
             const z = Math.sqrt( -2.0 * Math.log( u ) ) * Math.cos( 2.0 * Math.PI * v );
@@ -472,7 +468,6 @@
             this.x = width/2 + Math.cos(angle) * radius;
             this.y = height/2 + Math.sin(angle) * radius;
 
-            // 轨道速度
             const velocityMag = 2.0;
             this.vx = -Math.sin(angle) * velocityMag;
             this.vy = Math.cos(angle) * velocityMag;
@@ -484,7 +479,6 @@
 
         update() {
             if (animState === 'CLOUD') {
-                // 电子云轨道
                 const centerX = width/2;
                 const centerY = height/2;
                 const dx = centerX - this.x;
@@ -493,7 +487,6 @@
                 this.vx += dx * 0.001;
                 this.vy += dy * 0.001;
 
-                // 量子涨落
                 this.vx += (Math.random()-0.5) * 0.2;
                 this.vy += (Math.random()-0.5) * 0.2;
 
@@ -501,7 +494,6 @@
                 this.y += this.vy;
 
             } else if (animState === 'EXPLODE') {
-                // 爆炸力
                 const centerX = width / 2;
                 const centerY = height / 2;
                 const dx = this.x - centerX;
@@ -512,7 +504,6 @@
                 this.vx += (dx / dist) * force * 4;
                 this.vy += (dy / dist) * force * 4;
 
-                // 限制最大速度，防止飞太远
                 const maxV = 15;
                 if (Math.abs(this.vx) > maxV) this.vx = (this.vx / Math.abs(this.vx)) * maxV;
                 if (Math.abs(this.vy) > maxV) this.vy = (this.vy / Math.abs(this.vy)) * maxV;
@@ -521,20 +512,16 @@
                 this.y += this.vy;
 
             } else if (animState === 'IDLE') {
-                // 回归经典的物理逻辑
 
-                // 1. 稍微减速，接近 baseSpeed
                 const speed = Math.sqrt(this.vx*this.vx + this.vy*this.vy);
                 if (speed > config.baseSpeed) {
-                    this.vx *= 0.96; // 阻尼
+                    this.vx *= 0.96;
                     this.vy *= 0.96;
                 } else if (speed < config.baseSpeed * 0.5) {
-                    // 防止太慢
                     this.vx += (Math.random()-0.5) * 0.05;
                     this.vy += (Math.random()-0.5) * 0.05;
                 }
 
-                // 2. 增加粒子间相互作用 (防重叠)
                 for (let j = 0; j < particles.length; j++) {
                     if (this.index === j) continue;
                     const p2 = particles[j];
@@ -552,7 +539,6 @@
                 this.x += this.vx;
                 this.y += this.vy;
 
-                // 3. 经典的边界反弹 (最稳定，不堆积)
                 if (this.x < 0 || this.x > width) {
                     this.vx *= -1;
                     this.x = Math.max(0, Math.min(width, this.x));
@@ -562,13 +548,11 @@
                     this.y = Math.max(0, Math.min(height, this.y));
                 }
 
-                // 4. 鼠标交互
                 let dx = mouse.x - this.x;
                 let dy = mouse.y - this.y;
                 let dist = Math.sqrt(dx*dx + dy*dy);
                 if (dist < config.mouseRadius) {
                     const force = (config.mouseRadius - dist) / config.mouseRadius;
-                    // 柔和的排斥力
                     const repelStrength = config.mouseForce * 5;
                     this.vx -= (dx/dist) * force * repelStrength;
                     this.vy -= (dy/dist) * force * repelStrength;
@@ -581,7 +565,6 @@
             const isCloud = animState === 'CLOUD';
 
             if (isCloud) {
-                // 电子云特效：中心亮白，边缘带色
                 const dx = this.x - width/2;
                 const dy = this.y - height/2;
                 const dist = Math.sqrt(dx*dx + dy*dy);
@@ -596,45 +579,37 @@
                     ctx.fillStyle = `rgba(${colors.c2.r}, ${colors.c2.g}, ${colors.c2.b}, ${this.alpha * 0.9 * flicker})`;
                 }
 
-                // 绘制云状态粒子
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI*2);
                 ctx.fill();
             } else {
-                // IDLE 状态：微弱撕裂 (Tearing Effect)
 
-                // 基础颜色 (无闪烁)
                 ctx.fillStyle = this.phase > 0.5
                     ? `rgba(${colors.c1.r},${colors.c1.g},${colors.c1.b},${this.alpha})`
                     : `rgba(${colors.c2.r},${colors.c2.g},${colors.c2.b},${this.alpha})`;
 
-                // 随机触发撕裂 (概率较低，但视觉明显)
                 if (Math.random() > 0.96) { // 4% chance
-                    const tearRange = 4; // 减小撕裂幅度 (原 10 -> 4)
-                    // 随机方向计算
+                    const tearRange = 4;
                     const angle = Math.random() * Math.PI * 2;
-                    const dist = (Math.random() * 0.5 + 0.5) * tearRange; // 保证最小偏移量
+                    const dist = (Math.random() * 0.5 + 0.5) * tearRange;
                     const offsetX = Math.cos(angle) * dist;
                     const offsetY = Math.sin(angle) * dist;
 
-                    // 1. 绘制主体 (偏移后的位置)
                     ctx.beginPath();
                     ctx.arc(this.x + offsetX, this.y + offsetY, this.size, 0, Math.PI*2);
                     ctx.fill();
 
-                    // 2. 绘制撕裂产生的“残影” (连接原点和新点的线)
                     const r = this.phase > 0.5 ? colors.c1.r : colors.c2.r;
                     const g = this.phase > 0.5 ? colors.c1.g : colors.c2.g;
                     const b = this.phase > 0.5 ? colors.c1.b : colors.c2.b;
 
-                    ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, 0.3)`; // 稍微降低残影透明度
+                    ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, 0.3)`;
                     ctx.lineWidth = 1.2;
                     ctx.beginPath();
                     ctx.moveTo(this.x, this.y);
                     ctx.lineTo(this.x + offsetX, this.y + offsetY);
                     ctx.stroke();
                 } else {
-                    // 正常绘制
                     ctx.beginPath();
                     ctx.arc(this.x, this.y, this.size, 0, Math.PI*2);
                     ctx.fill();
@@ -651,12 +626,10 @@
 
     function startAnimation() {
         initParticles();
-        loadingText.style.opacity = 1; // 恢复文字显示
+        loadingText.style.opacity = 1;
 
-        // 1. 电子云持续 2秒
         setTimeout(() => {
             animState = 'EXPLODE';
-            // 隐藏文字，让文字炸开并消失
             loadingText.style.opacity = 0;
             loadingText.style.transform = "translate(-50%, -50%) scale(1.5)";
             loadingText.style.filter = "blur(10px)";
@@ -670,20 +643,16 @@
         ctx.clearRect(0, 0, width, height);
         const colors = themeColors[currentTheme];
 
-        // EXPLODE -> IDLE 切换
         if (animState === 'EXPLODE') {
-            // 爆炸持续 0.8秒后进入 IDLE
             if (Date.now() - explosionTime > 800) {
                 animState = 'IDLE';
             }
         }
 
-        // 连线淡入逻辑
         let showLines = false;
         let lineOpacityFactor = 0;
         if (animState === 'IDLE') {
             const timeSinceExplosion = Date.now() - explosionTime;
-            // 稍微延迟一点显示连线，让粒子散开后再连
             if (timeSinceExplosion > 1000) {
                 showLines = true;
                 lineOpacityFactor = Math.min((timeSinceExplosion - 1000) / 1000, 1);
@@ -694,7 +663,6 @@
             p.update();
             p.draw();
 
-            // 绘制连线 (仅在 IDLE 且淡入后)
             if (showLines && lineOpacityFactor > 0.01) {
                 for(let j=i+1; j<particles.length; j++) {
                     let p2 = particles[j];
@@ -702,12 +670,10 @@
 
                     if(dist < config.connRadius) {
                         let op = 1 - dist/config.connRadius;
-                        // 乘上 fade factor
                         op *= lineOpacityFactor;
 
                         ctx.beginPath();
                         let grad = ctx.createLinearGradient(p.x, p.y, p2.x, p2.y);
-                        // 连线透明度 (亮度调整为 0.2)
                         let lineAlpha = op * 0.2;
                         grad.addColorStop(0, `rgba(${colors.c1.r},${colors.c1.g},${colors.c1.b},${lineAlpha})`);
                         grad.addColorStop(1, `rgba(${colors.c2.r},${colors.c2.g},${colors.c2.b},${lineAlpha})`);
@@ -725,7 +691,6 @@
 
     startAnimation();
 
-    /** * 2. 主题切换逻辑 */
     const themeBtn = document.getElementById('theme-btn');
     const themeIcon = document.getElementById('theme-icon');
 
@@ -741,7 +706,6 @@
         }
     });
 
-    /** * 3. 交互式 Terminal 逻辑 */
     const terminalBody = document.getElementById('terminal-body');
     const terminalWindow = document.getElementById('terminal-window');
     const inputLine = document.getElementById('input-line');
@@ -749,19 +713,12 @@
     const cmdDisplay = document.getElementById('cmd-display');
     const cmdPlaceholder = document.getElementById('cmd-placeholder');
 
-    const fileSystem = {
-        'about.txt': "Ph.D. student interested in Quantum ML and RL. \nBased in Metaverse.",
-        'projects': "1. Neural-Entanglement-Opt \n2. Stochastic-Gradient-Langevin",
-        'contact.md': "Email: weiguoma@example.com\nGithub: github.com/weiguoma"
-    };
-
-    // 格式化输出函数
     const commands = {
         'help': () => `
             <div class="cmd-result">
                 <div class="result-section-title">Available Commands</div>
                 <div class="result-item"><span class="result-key">whoami</span> - Display profile summary</div>
-                <div class="result-item"><span class="result-key">interests</span> - List research interests & papers</div>
+                <div class="result-item"><span class="result-key">interests</span> - List research interests</div>
                 <div class="result-item"><span class="result-key">contact</span> - Show contact information</div>
                 <div class="result-item"><span class="result-key">clear</span> - Clear the terminal screen</div>
             </div>
