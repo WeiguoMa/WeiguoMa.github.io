@@ -9,7 +9,7 @@ I am currently a Ph.D. candidate at Institute of Physics, Chinese Academy of Sci
 
 ### Education
 - 2021.08 - Present, **Institute of Physics, Chinese Academy of Sciences**, Ph.D. in Condensed Matter Physics.
-- 2017.09 - 2021.6, School of Physical Sciences and Technology, **Lanzhou University**, BSc in Theoretical Physics.
+- 2017.09 - 2021.6, School of Physical Sciences and Technology, **Lanzhou University**, B.S. in Theoretical Physics.
 
 ### Experience
 - 2025.10 - 2025.11, Visiting Ph.D. student, Technology Innovation Institute, Abu Dhabi, United Arab Emirates
