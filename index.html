@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="color-scheme" content="dark light">
+    <meta name="color-scheme" content="dark" id="meta-color-scheme">
     <title>Home | Weiguo Ma</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
@@ -693,16 +693,19 @@
 
     const themeBtn = document.getElementById('theme-btn');
     const themeIcon = document.getElementById('theme-icon');
+    const metaColorScheme = document.getElementById('meta-color-scheme');
 
     themeBtn.addEventListener('click', () => {
         if (currentTheme === 'dark') {
             document.documentElement.setAttribute('data-theme', 'light');
             currentTheme = 'light';
             themeIcon.className = 'ri-sun-line';
+            if(metaColorScheme) metaColorScheme.content = 'light';
         } else {
             document.documentElement.removeAttribute('data-theme');
             currentTheme = 'dark';
             themeIcon.className = 'ri-moon-line';
+            if(metaColorScheme) metaColorScheme.content = 'dark';
         }
     });
 
