@@ -1,0 +1,324 @@
+---
+layout: null
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page.title }} | Weiguo Ma</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- 复用你 Research 页面的 CSS，保持风格完全一致 -->
+    <style>
+        :root {
+            --bg-color: #0a0a0a;
+            --text-primary: #e0e0e0;
+            --text-secondary: #a0a0a0;
+            --accent-color: #00cfd6;
+            --border-color: #222222;
+            --fab-bg: rgba(26, 26, 26, 0.8);
+            --code-bg: #1a1a1a;
+            --section-title-size: 1.1rem;
+        }
+
+        [data-theme="light"] {
+            --bg-color: #fafafa;
+            --text-primary: #1a1a1a;
+            --text-secondary: #555555;
+            --accent-color: #0056b3;
+            --border-color: #e5e5e5;
+            --fab-bg: rgba(255, 255, 255, 0.9);
+            --code-bg: #f5f5f5;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: 400;
+            line-height: 1.8;
+            -webkit-font-smoothing: antialiased;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        html, body { font-family: Arial, Helvetica, sans-serif !important; }
+        article, .content-body { font-family: Arial, Helvetica, sans-serif; }
+
+        /* Keep deliberate serif/mono styling where explicitly used */
+        .content-body .font-serif { font-family: 'Playfair Display', serif !important; }
+        .content-body .font-mono { font-family: 'Fira Code', monospace !important; }
+
+        h1, h2, h3, h4 { font-family: 'Playfair Display', serif; margin-top: 1.5em; margin-bottom: 0.5em; color: var(--text-primary); }
+        .container-academic article h1 {
+            font-size: clamp(1.8rem, 3vw, 2.3rem) !important;
+            line-height: 1.15 !important;
+            margin-top: 16px;
+            margin-bottom: 14px;
+        }
+        /* Unified section heading size */
+        h2 {
+            font-size: var(--section-title-size);
+            font-weight: 600;
+            line-height: 1.35;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.3em;
+            margin-top: 1.0em;
+            margin-bottom: 0.55em;
+        }
+
+        a { color: var(--accent-color); text-decoration: none; border-bottom: 1px dotted var(--accent-color); transition: all 0.2s; }
+        a:hover { border-bottom-style: solid; }
+
+        .container-academic {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 60px 24px 200px; /* 底部留白给悬浮按钮 */
+            position: relative;
+        }
+
+        /* Markdown 内容样式修正 */
+        .content-body p {
+            margin-bottom: 1.5em;
+            text-align: justify;
+            text-justify: inter-word;
+            text-indent: 2em;
+            hyphens: auto;
+        }
+        .content-body ul { list-style: disc; margin-left: 1.5em; margin-bottom: 1.5em; color: var(--text-secondary); }
+        .content-body blockquote { border-left: 4px solid var(--accent-color); padding-left: 1em; margin-left: 0; color: var(--text-secondary); font-style: italic; }
+        .content-body code { font-family: 'Fira Code', monospace; background: var(--code-bg); padding: 0.2em 0.4em; border-radius: 4px; font-size: 0.85em; }
+
+        /* 导航栏样式复用 */
+        .nav-header { display: flex; justify-content: space-between; align-items: center; padding-top: 18px; margin-bottom: 22px; padding-bottom: 16px; border-bottom: 1px solid var(--border-color); }
+        .back-link { font-family: 'Fira Code', monospace; font-size: 0.9rem; color: var(--text-secondary); display: flex; align-items: center; gap: 8px; border: none; }
+        .back-link:hover { color: var(--accent-color); }
+
+        .meta-info {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 6px;
+            margin-bottom: 28px;
+        }
+
+        .abstract { margin-bottom: 48px; }
+        .abstract h2 {
+            font-size: var(--section-title-size);
+            text-align: center;
+            border-bottom: none;
+            padding-bottom: 0;
+            margin-top: 0;
+            margin-bottom: 14px;
+            letter-spacing: 0.02em;
+            font-weight: 700;
+            text-rendering: optimizeLegibility;
+        }
+        /* Scheme A: centered section titles usable from Markdown via <h2 class="section-title">... */
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: var(--section-title-size);
+            text-align: center;
+            border-bottom: none;
+            padding-bottom: 0;
+            margin-top: 0;
+            margin-bottom: 14px;
+            letter-spacing: 0.02em;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-rendering: optimizeLegibility;
+        }
+        .abstract .abstract-text { margin: 0; }
+        .abstract .abstract-text p {
+            margin: 0;
+            color: color-mix(in srgb, var(--text-primary) 70%, var(--text-secondary));
+            font-weight: 400;
+            line-height: 1.9;
+            text-align: justify;
+            text-justify: inter-word;
+            text-indent: 2em;
+            hyphens: auto;
+        }
+
+        /* ================= 悬浮按钮组 (Right Bottom) ================= */
+        /* 严格参照 research/index.html 的样式数值 */
+
+        .fab-btn {
+            position: fixed;
+            right: 40px;
+            width: 56px;
+            height: 56px;
+            background-color: var(--fab-bg);
+            backdrop-filter: blur(5px);
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            z-index: 100;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            text-decoration: none;
+            border-bottom: none;
+        }
+        .fab-btn:hover {
+            color: var(--accent-color);
+            border-color: var(--accent-color);
+            transform: translateY(-5px);
+            border-bottom: none;
+        }
+
+        /* 返回顶部按钮 */
+        .top-fab {
+            bottom: 40px; /* Desktop: 40px */
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(10px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        /* JS 控制显示时的状态 */
+        .top-fab.visible {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+        /* 显示状态下的 Hover 行为 (保持上浮) */
+        .top-fab.visible:hover {
+            transform: translateY(-5px);
+        }
+
+        /* 明暗切换按钮 */
+        /* Desktop: 40px (bottom btn) + 56px (height) + 24px (gap) = 120px */
+        .theme-fab {
+            bottom: 120px;
+        }
+        .theme-fab:hover i {
+            transform: rotate(30deg);
+        }
+        .theme-fab i { transition: transform 0.5s ease; }
+
+        @media (max-width: 640px) {
+            .container-academic { padding-top: 40px; }
+
+            /* Mobile 尺寸与位置调整 - 对齐 index.html */
+            .fab-btn {
+                right: 20px;
+                width: 48px;
+                height: 48px;
+                font-size: 1.25rem;
+            }
+            .top-fab { bottom: 20px; } /* Mobile: 20px */
+            .theme-fab { bottom: 80px; } /* Mobile: 20 + 48 + 12 = 80px */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container-academic">
+
+        <div class="nav-header">
+            <a href="/research/" class="back-link">
+                <i class="ri-arrow-left-line"></i> Back
+            </a>
+        </div>
+
+        <article>
+            <h1>{{ page.title }}</h1>
+            <div class="meta-info">
+                <span>{{ page.date | date: "%Y-%m-%d" }}</span> |
+                <span style="color: var(--accent-color)">{{ page.status }}</span>
+            </div>
+
+            {% if page.abstract %}
+            <section class="abstract">
+                <h2>Abstract</h2>
+                <div class="abstract-text">
+                    {{ page.abstract | markdownify | strip }}
+                </div>
+            </section>
+            {% endif %}
+
+            <!-- 这里是 Markdown 内容注入的地方 -->
+            <div class="content-body">
+                {{ content }}
+            </div>
+        </article>
+
+        <footer style="margin-top: 60px; padding-top: 20px; border-top: 1px solid var(--border-color); text-align: center; color: var(--text-secondary); font-size: 0.8rem; font-family: 'Fira Code';">
+            End of Document
+        </footer>
+    </div>
+
+    <!-- 悬浮按钮组 -->
+
+    <!-- 1. 明暗切换按钮 -->
+    <button id="theme-toggle" class="fab-btn theme-fab" title="Toggle Theme">
+        <i class="ri-moon-line"></i>
+    </button>
+
+    <!-- 2. 返回顶部按钮 -->
+    <button id="back-to-top" class="fab-btn top-fab" title="Back to Top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+        <i class="ri-arrow-up-line"></i>
+    </button>
+
+    <!-- 复用之前的 JS 逻辑 -->
+    <script>
+        // === 主题切换逻辑 ===
+        const themeBtn = document.getElementById('theme-toggle');
+        const themeIcon = themeBtn.querySelector('i');
+
+        function setTheme(isDark) {
+            if (isDark) {
+                document.documentElement.removeAttribute('data-theme');
+                themeIcon.className = 'ri-moon-line';
+            } else {
+                document.documentElement.setAttribute('data-theme', 'light');
+                themeIcon.className = 'ri-sun-line';
+            }
+        }
+
+        const savedTheme = localStorage.getItem('research-theme');
+        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        if (savedTheme === 'light') setTheme(false);
+        else if (savedTheme === 'dark') setTheme(true);
+        else setTheme(systemPrefersDark);
+
+        themeBtn.addEventListener('click', () => {
+            const isCurrentlyLight = document.documentElement.getAttribute('data-theme') === 'light';
+            if (isCurrentlyLight) {
+                setTheme(true);
+                localStorage.setItem('research-theme', 'dark');
+            } else {
+                setTheme(false);
+                localStorage.setItem('research-theme', 'light');
+            }
+        });
+
+        // === 返回顶部逻辑 (优化版) ===
+        const topBtn = document.getElementById('back-to-top');
+
+        function handleScroll() {
+            // 只要页面有滚动，就尝试显示按钮 (阈值 100px)
+            if (window.scrollY > 100) {
+                topBtn.classList.add('visible');
+            } else {
+                topBtn.classList.remove('visible');
+            }
+        }
+
+        window.addEventListener('scroll', handleScroll);
+        // 初始化检查，确保刷新后如果不在顶部能看到按钮
+        handleScroll();
+    </script>
+</body>
+</html>

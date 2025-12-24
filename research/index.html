@@ -1,0 +1,257 @@
+---
+layout: null
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research | Weiguo Ma</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-color: #0a0a0a;
+            --text-primary: #e0e0e0;
+            --text-secondary: #a0a0a0;
+            --accent-color: #00cfd6;
+            --border-color: #222222;
+            --tag-bg: #1a1a1a;
+            --tag-border: #333;
+            --fab-bg: rgba(26, 26, 26, 0.8);
+
+            --status-wip-border: #b8860b;
+            --status-wip-text: #deb887;
+            --status-pub-border: #1e4d2b;
+            --status-pub-text: #4ade80;
+        }
+
+        [data-theme="light"] {
+            --bg-color: #fafafa;
+            --text-primary: #1a1a1a;
+            --text-secondary: #555555;
+            --accent-color: #0056b3;
+            --border-color: #e5e5e5;
+            --tag-bg: #f0f0f0;
+            --tag-border: #ddd;
+            --fab-bg: rgba(255, 255, 255, 0.9);
+
+            --status-wip-border: #ffeeba;
+            --status-wip-text: #856404;
+            --status-pub-border: #c3e6cb;
+            --status-pub-text: #155724;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        h1, h2, h3, .serif-font { font-family: 'Playfair Display', serif; }
+
+        /* Layout Fix for FAB Obstruction:
+           增加 padding-bottom: 200px (足够容纳两个悬浮按钮的高度 + 间距)
+           这样内容滚动到底部时，文字会在按钮上方，不会被遮挡。
+        */
+        .container-academic {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 60px 24px 200px;
+            position: relative;
+        }
+
+        /* 悬浮切换按钮 */
+        .theme-toggle-btn {
+            position: fixed;
+            bottom: 120px;
+            right: 40px;
+            background-color: var(--fab-bg);
+            backdrop-filter: blur(5px);
+            border: 1px solid var(--border-color);
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            z-index: 100;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .theme-toggle-btn:hover {
+            color: var(--accent-color);
+            border-color: var(--accent-color);
+            transform: translateY(-5px);
+        }
+        .theme-toggle-btn i {
+            transition: transform 0.5s ease;
+        }
+        .theme-toggle-btn:hover i {
+            transform: rotate(30deg);
+        }
+
+        /* 悬浮 Home 按钮 */
+        .home-fab {
+            position: fixed; bottom: 40px; right: 40px; width: 56px; height: 56px;
+            background-color: var(--fab-bg); backdrop-filter: blur(5px);
+            border: 1px solid var(--border-color); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--text-secondary); text-decoration: none;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3); z-index: 100;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-size: 1.5rem;
+        }
+        .home-fab:hover { color: var(--accent-color); border-color: var(--accent-color); transform: translateY(-5px); }
+
+        .research-item { padding: 22px 0 32px; border-bottom: 1px solid var(--border-color); transition: transform 0.3s ease; position: relative; }
+        .research-item:hover { transform: translateX(10px); }
+        .research-item:last-child { border-bottom: none; }
+
+        .paper-title { font-size: 1.35rem; font-weight: 500; line-height: 1.3; margin-bottom: 8px; letter-spacing: 0.5px; }
+        .paper-title a { color: var(--text-primary); text-decoration: none; transition: color 0.3s ease; }
+        .research-item:hover .paper-title a { color: var(--accent-color); }
+
+        .paper-meta { font-family: 'Fira Code', monospace; font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 12px; display: flex; align-items: center; flex-wrap: wrap; gap: 12px; }
+        .meta-tag { background: var(--tag-bg); padding: 2px 10px; border-radius: 4px; font-size: 0.75rem; color: var(--accent-color); border: 1px solid var(--tag-border); }
+        .status-wip { border-color: var(--status-wip-border); color: var(--status-wip-text); }
+        .status-published { border-color: var(--status-pub-border); color: var(--status-pub-text); }
+
+        .paper-abstract { color: var(--text-secondary); font-size: 1rem; margin-bottom: 20px; text-align: justify; font-weight: 300; }
+
+        .action-links { display: flex; gap: 16px; margin-top: 10px; }
+        .action-link { font-size: 0.9rem; color: var(--accent-color); text-decoration: none; font-family: 'Fira Code', monospace; border-bottom: 1px solid transparent; transition: all 0.2s; opacity: 0.9; }
+        .action-link:hover { opacity: 1; border-bottom-color: var(--accent-color); }
+
+        .fade-in { animation: fadeIn 1s ease-out forwards; opacity: 0; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        @media (max-width: 640px) {
+            /* 移动端调整：
+               1. 稍微缩小按钮尺寸以减少遮挡
+               2. 调整位置
+               3. 保持足够的底部留白 (padding-bottom)
+            */
+            .home-fab {
+                bottom: 20px; right: 20px;
+                width: 48px; height: 48px;
+                font-size: 1.25rem;
+            }
+            .theme-toggle-btn {
+                bottom: 80px; right: 20px; /* 20 + 48 + 12 = 80 */
+                width: 48px; height: 48px;
+                font-size: 1.25rem;
+            }
+            .container-academic {
+                padding-top: 40px;
+                padding-bottom: 160px; /* 移动端底部留白 */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container-academic fade-in">
+        <!-- 注意：Theme Toggle Button 已从此移动到外部 -->
+
+        <header class="flex justify-between items-end mb-8 border-b border-[var(--border-color)] pb-4 transition-colors duration-500">
+            <div>
+                <h1 class="text-3xl mb-2 tracking-wide font-bold">Weiguo Ma</h1>
+                <p class="text-[var(--text-secondary)] font-serif italic">Research & Publications</p>
+            </div>
+        </header>
+
+        <section class="mb-10">
+            <p class="text-lg text-[var(--text-secondary)] leading-relaxed font-serif transition-colors duration-500">
+                My research interests lie at the intersection of
+                <span class="text-[var(--text-primary)] border-b border-[var(--border-color)] pb-0.5 font-medium">Quantum Many-Body Physics</span>
+                and
+                <span class="text-[var(--text-primary)] border-b border-[var(--border-color)] pb-0.5 font-medium">Quantum Computation</span>.
+            </p>
+        </section>
+
+        <main id="research-list">
+            <h2 class="text-lg font-bold mb-2 pl-3 border-l-2 border-[var(--accent-color)] uppercase tracking-widest text-[var(--text-secondary)] transition-colors duration-500">Selected Works</h2>
+
+            {% assign research_posts = site.categories.research %}
+
+            {% for post in research_posts %}
+            <div class="research-item">
+                <div class="paper-meta">
+                    {% if post.status contains "Preparation" %}
+                        <span class="meta-tag status-wip">{{ post.status }}</span>
+                    {% else %}
+                        <span class="meta-tag status-published">{{ post.status | default: "Published" }}</span>
+                    {% endif %}
+                    <span>{{ post.date | date: "%Y" }}</span>
+                    {% for tag in post.tags %} <span>{{ tag }}</span> {% endfor %}
+                </div>
+
+                <h3 class="paper-title serif-font"><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
+
+                <div class="paper-abstract">
+                    {{ post.abstract | strip_html | remove: "Abstract:" | strip | truncate: 290 }}
+                </div>
+
+                <div class="action-links">
+                    {% if post.online_web and post.online_web != "#" %}<a href="{{ post.online_web }}" class="action-link" target="_blank">[Online]</a>{% endif %}
+                    {% if post.arxiv_link and post.arxiv_link != "#" %}<a href="{{ post.arxiv_link }}" class="action-link" target="_blank">[Arxiv]</a>{% endif %}
+                    {% if post.code_link %}<a href="{{ post.code_link }}" class="action-link" target="_blank">[Code]</a>{% endif %}
+                </div>
+            </div>
+            {% endfor %}
+
+            {% if research_posts.size == 0 %}
+            <div class="text-[var(--text-secondary)] italic p-4 border border-[var(--border-color)] rounded text-center">
+                Currently updating research list. Please check back later.
+            </div>
+            {% endif %}
+        </main>
+
+        <footer class="mt-20 pt-8 border-t border-[var(--border-color)] text-center text-[var(--text-secondary)] text-sm font-mono transition-colors duration-500">
+            &copy; 2025 Weiguo Ma. content licensed under CC-BY-4.0.
+        </footer>
+    </div>
+
+    <!-- 悬浮按钮组 -->
+    <button id="theme-toggle" class="theme-toggle-btn" title="Toggle Theme">
+        <i class="ri-moon-line"></i>
+    </button>
+
+    <a href="{{ '/' | relative_url }}" class="home-fab" title="Back to Home">
+        <i class="ri-home-4-line"></i>
+    </a>
+
+    <script>
+        const themeBtn = document.getElementById('theme-toggle');
+        const themeIcon = themeBtn.querySelector('i');
+        function setTheme(isDark) {
+            if (isDark) { document.documentElement.removeAttribute('data-theme'); themeIcon.className = 'ri-moon-line'; }
+            else { document.documentElement.setAttribute('data-theme', 'light'); themeIcon.className = 'ri-sun-line'; }
+        }
+        const savedTheme = localStorage.getItem('research-theme');
+        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (savedTheme === 'light') setTheme(false); else if (savedTheme === 'dark') setTheme(true); else setTheme(systemPrefersDark);
+        themeBtn.addEventListener('click', () => {
+            const isCurrentlyLight = document.documentElement.getAttribute('data-theme') === 'light';
+            if (isCurrentlyLight) { setTheme(true); localStorage.setItem('research-theme', 'dark'); }
+            else { setTheme(false); localStorage.setItem('research-theme', 'light'); }
+        });
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+            if (!localStorage.getItem('research-theme')) { setTheme(e.matches); }
+        });
+    </script>
+</body>
+</html>
