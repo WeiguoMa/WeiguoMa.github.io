@@ -91,6 +91,53 @@ layout: null
         .content-body blockquote { border-left: 4px solid var(--accent-color); padding-left: 1em; margin-left: 0; color: var(--text-secondary); font-style: italic; }
         .content-body code { font-family: 'Fira Code', monospace; background: var(--code-bg); padding: 0.2em 0.4em; border-radius: 4px; font-size: 0.85em; }
 
+        /* === APS/Nature 风格图片卡片 === */
+
+        /* 1. 图片容器 (Figure) */
+        .aps-figure {
+            display: block;
+            background-color: #ffffff; /* 永远白色背景 */
+            padding: 15px;             /* 内边距 */
+            margin: 2.5rem 0;          /* 外边距 */
+            border: 1px solid #e1e4e8; /* 浅灰边框 */
+            border-radius: 3px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05); /* 轻微阴影 */
+            page-break-inside: avoid;
+            transition: filter 0.3s ease, border-color 0.3s ease;
+        }
+
+        /* 暗模式下降低卡片亮度，模拟昏暗环境下的纸张，保护视力 */
+        :root:not([data-theme="light"]) .aps-figure {
+            filter: brightness(0.85);
+            border-color: #444; /* 边框也相应变深 */
+        }
+
+        /* 2. 图片本身 */
+        .aps-figure img {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+            height: auto;
+            border-radius: 0;
+            filter: none !important; /* 禁止任何反转或变暗 */
+        }
+
+        /* 3. 图片说明 (Caption) */
+        .aps-caption {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid #f0f0f0; /* 分隔线 */
+            color: #222222 !important;     /* 永远黑色文字 */
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            text-align: justify;
+        }
+        .aps-caption strong {
+            color: #000;
+            font-weight: 600;
+        }
+
         .nav-header { display: flex; justify-content: space-between; align-items: center; padding-top: 18px; margin-bottom: 22px; padding-bottom: 16px; border-bottom: 1px solid var(--border-color); }
         .back-link { font-family: 'Fira Code', monospace; font-size: 0.9rem; color: var(--text-secondary); display: flex; align-items: center; gap: 8px; border: none; }
         .back-link:hover { color: var(--accent-color); }
@@ -307,6 +354,60 @@ layout: null
 
         window.addEventListener('scroll', handleScroll);
         handleScroll();
+
+        // === 自动美化图片 (APS/Nature 风格) ===
+        // 逻辑：将文章内的 Markdown 图片自动包裹在白底卡片中
+        document.addEventListener("DOMContentLoaded", function() {
+            const contentImages = document.querySelectorAll('.content-body img');
+
+            contentImages.forEach(img => {
+                // 如果图片已经是 figure 的一部分，或者是表情包等小图（可根据类名判断），则跳过
+                if (img.closest('figure') || img.classList.contains('emoji')) return;
+
+                // 创建容器 figure
+                const figure = document.createElement('figure');
+                figure.className = 'aps-figure';
+
+                // 将图片插入到 figure 中
+                // 这里需要注意：如果 img 是 p 标签的唯一子元素，我们最好直接替换掉那个 p
+                const parentP = img.parentElement;
+                if (parentP && parentP.tagName === 'P' && parentP.children.length === 1 && parentP.textContent.trim() === '') {
+                    parentP.parentNode.insertBefore(figure, parentP);
+                    figure.appendChild(img);
+                    parentP.remove(); // 移除原来的空 p
+                } else {
+                    // 如果不是独立段落，就直接在当前位置包裹
+                    img.parentNode.insertBefore(figure, img);
+                    figure.appendChild(img);
+                }
+
+                // 处理 Caption
+                // 自动提取 alt 属性作为 Caption
+                // 只有当 alt 存在且长度大于 0 时才显示
+                if (img.alt && img.alt.trim().length > 0) {
+                    const caption = document.createElement('figcaption');
+                    caption.className = 'aps-caption';
+
+                    // 简单的正则高亮：如果 alt 包含 "Figure X:"，加粗它
+                    // 例如：![Figure 1: Result](...)
+                    const altText = img.alt;
+                    // 检查是否以 "Figure" 或 "Fig" 开头
+                    if (/^(Figure|Fig)\.?\s?\d+/i.test(altText)) {
+                        const parts = altText.split(':');
+                        if (parts.length > 1) {
+                            // "Figure 1" 加粗，剩下的部分普通显示
+                            caption.innerHTML = `<strong>${parts[0]}:</strong>${parts.slice(1).join(':')}`;
+                        } else {
+                            caption.textContent = altText;
+                        }
+                    } else {
+                        caption.textContent = altText;
+                    }
+
+                    figure.appendChild(caption);
+                }
+            });
+        });
     </script>
 </body>
 </html>

@@ -5,6 +5,7 @@ permalink: /blog/
 pagination:
   enabled: true
   collection: posts
+  category: blog
   per_page: 5
   permalink: /blog/page/:num/
 ---
