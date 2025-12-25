@@ -272,7 +272,10 @@ layout: null
 
     <!-- 复用之前的 JS 逻辑 -->
     <script>
-        // === 主题切换逻辑 ===
+        // === 主题切换逻辑 (已同步到所有页面) ===
+        // Shared Storage Key
+        const STORAGE_KEY = 'site-theme-preference';
+
         const themeBtn = document.getElementById('theme-toggle');
         const themeIcon = themeBtn.querySelector('i');
 
@@ -286,25 +289,38 @@ layout: null
             }
         }
 
-        const savedTheme = localStorage.getItem('research-theme');
-        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        function initTheme() {
+            const savedTheme = localStorage.getItem(STORAGE_KEY);
+            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-        if (savedTheme === 'light') setTheme(false);
-        else if (savedTheme === 'dark') setTheme(true);
-        else setTheme(systemPrefersDark);
+            if (savedTheme) {
+                setTheme(savedTheme === 'dark');
+            } else {
+                setTheme(systemPrefersDark);
+            }
+        }
+
+        // Initialize immediately
+        initTheme();
 
         themeBtn.addEventListener('click', () => {
             const isCurrentlyLight = document.documentElement.getAttribute('data-theme') === 'light';
             if (isCurrentlyLight) {
                 setTheme(true);
-                localStorage.setItem('research-theme', 'dark');
+                localStorage.setItem(STORAGE_KEY, 'dark');
             } else {
                 setTheme(false);
-                localStorage.setItem('research-theme', 'light');
+                localStorage.setItem(STORAGE_KEY, 'light');
             }
         });
 
-        // === 返回顶部逻辑 (优化版) ===
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+            if (!localStorage.getItem(STORAGE_KEY)) {
+                setTheme(e.matches);
+            }
+        });
+
+        // === 返回顶部逻辑 ===
         const topBtn = document.getElementById('back-to-top');
 
         function handleScroll() {

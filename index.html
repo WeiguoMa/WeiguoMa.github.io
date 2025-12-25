@@ -433,7 +433,58 @@
         light: { c1: {r:0, g:122, b:204}, c2: {r:124, g:58, b:237} } // Deep Blue & Violet
     };
 
-    let currentTheme = 'dark';
+    // Shared Storage Key
+    const STORAGE_KEY = 'site-theme-preference';
+
+    // Theme Elements
+    const themeBtn = document.getElementById('theme-btn');
+    const themeIcon = document.getElementById('theme-icon');
+    const metaColorScheme = document.getElementById('meta-color-scheme');
+
+    // Theme Management Logic
+    let currentTheme = 'dark'; // default
+
+    function applyTheme(theme) {
+        currentTheme = theme;
+        if (theme === 'light') {
+            document.documentElement.setAttribute('data-theme', 'light');
+            themeIcon.className = 'ri-sun-line';
+            if(metaColorScheme) metaColorScheme.content = 'light';
+        } else {
+            document.documentElement.removeAttribute('data-theme');
+            themeIcon.className = 'ri-moon-line';
+            if(metaColorScheme) metaColorScheme.content = 'dark';
+        }
+    }
+
+    function initTheme() {
+        const savedTheme = localStorage.getItem(STORAGE_KEY);
+        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        if (savedTheme) {
+            applyTheme(savedTheme);
+        } else {
+            applyTheme(systemPrefersDark ? 'dark' : 'light');
+        }
+    }
+
+    // Initialize Theme immediately
+    initTheme();
+
+    // Toggle Listener
+    themeBtn.addEventListener('click', () => {
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        applyTheme(newTheme);
+        localStorage.setItem(STORAGE_KEY, newTheme);
+    });
+
+    // System Preference Listener
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+        if (!localStorage.getItem(STORAGE_KEY)) {
+            applyTheme(e.matches ? 'dark' : 'light');
+        }
+    });
+
 
     const config = {
         count: window.innerWidth < 768 ? 60 : 100,
@@ -561,7 +612,8 @@
         }
 
         draw() {
-            const colors = themeColors[currentTheme];
+            // Safe access to currentTheme in case it changes
+            const colors = themeColors[currentTheme] || themeColors.dark;
             const isCloud = animState === 'CLOUD';
 
             if (isCloud) {
@@ -641,7 +693,7 @@
 
     function loop() {
         ctx.clearRect(0, 0, width, height);
-        const colors = themeColors[currentTheme];
+        const colors = themeColors[currentTheme] || themeColors.dark;
 
         if (animState === 'EXPLODE') {
             if (Date.now() - explosionTime > 800) {
@@ -690,24 +742,6 @@
     }
 
     startAnimation();
-
-    const themeBtn = document.getElementById('theme-btn');
-    const themeIcon = document.getElementById('theme-icon');
-    const metaColorScheme = document.getElementById('meta-color-scheme');
-
-    themeBtn.addEventListener('click', () => {
-        if (currentTheme === 'dark') {
-            document.documentElement.setAttribute('data-theme', 'light');
-            currentTheme = 'light';
-            themeIcon.className = 'ri-sun-line';
-            if(metaColorScheme) metaColorScheme.content = 'light';
-        } else {
-            document.documentElement.removeAttribute('data-theme');
-            currentTheme = 'dark';
-            themeIcon.className = 'ri-moon-line';
-            if(metaColorScheme) metaColorScheme.content = 'dark';
-        }
-    });
 
     const terminalBody = document.getElementById('terminal-body');
     const terminalWindow = document.getElementById('terminal-window');
@@ -866,7 +900,7 @@
         if (commands[cmd]) {
             outputHtml = commands[cmd](arg);
         } else {
-            outputHtml = `<div class="cmd-result" style="color: #ff5f56">Command not found: ${cmd}. Type <span class="keyword">'help'</span> for list.</div>`;
+            outputHtml = `<div class=\"cmd-result\" style=\"color: #ff5f56\">Command not found: ${cmd}. Type <span class=\"keyword\">'help'</span> for list.</div>`;
         }
 
         if (outputHtml !== 'CLEAR_SIGNAL') {
@@ -879,7 +913,7 @@
     function printOutput(html, cmd) {
         const historyLine = document.createElement('div');
         historyLine.className = 'output-line';
-        historyLine.innerHTML = `<span class="prompt"><span class="path">~</span></span> ${cmd}`;
+        historyLine.innerHTML = `<span class=\"prompt\"><span class=\"path\">~</span></span> ${cmd}`;
         terminalBody.insertBefore(historyLine, inputLine);
 
         if (html) {

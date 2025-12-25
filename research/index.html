@@ -235,22 +235,51 @@ layout: null
     </a>
 
     <script>
+        // Shared Storage Key (Matching index.html)
+        const STORAGE_KEY = 'site-theme-preference';
+
         const themeBtn = document.getElementById('theme-toggle');
         const themeIcon = themeBtn.querySelector('i');
+
         function setTheme(isDark) {
-            if (isDark) { document.documentElement.removeAttribute('data-theme'); themeIcon.className = 'ri-moon-line'; }
-            else { document.documentElement.setAttribute('data-theme', 'light'); themeIcon.className = 'ri-sun-line'; }
+            if (isDark) {
+                document.documentElement.removeAttribute('data-theme');
+                themeIcon.className = 'ri-moon-line';
+            } else {
+                document.documentElement.setAttribute('data-theme', 'light');
+                themeIcon.className = 'ri-sun-line';
+            }
         }
-        const savedTheme = localStorage.getItem('research-theme');
-        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        if (savedTheme === 'light') setTheme(false); else if (savedTheme === 'dark') setTheme(true); else setTheme(systemPrefersDark);
+
+        function initTheme() {
+            const savedTheme = localStorage.getItem(STORAGE_KEY);
+            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+            if (savedTheme) {
+                setTheme(savedTheme === 'dark');
+            } else {
+                setTheme(systemPrefersDark);
+            }
+        }
+
+        // Initialize immediately
+        initTheme();
+
         themeBtn.addEventListener('click', () => {
             const isCurrentlyLight = document.documentElement.getAttribute('data-theme') === 'light';
-            if (isCurrentlyLight) { setTheme(true); localStorage.setItem('research-theme', 'dark'); }
-            else { setTheme(false); localStorage.setItem('research-theme', 'light'); }
+            if (isCurrentlyLight) {
+                setTheme(true);
+                localStorage.setItem(STORAGE_KEY, 'dark');
+            } else {
+                setTheme(false);
+                localStorage.setItem(STORAGE_KEY, 'light');
+            }
         });
+
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-            if (!localStorage.getItem('research-theme')) { setTheme(e.matches); }
+            if (!localStorage.getItem(STORAGE_KEY)) {
+                setTheme(e.matches);
+            }
         });
     </script>
 </body>
