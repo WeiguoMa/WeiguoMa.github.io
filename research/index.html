@@ -59,10 +59,6 @@ layout: null
 
         h1, h2, h3, .serif-font { font-family: 'Playfair Display', serif; }
 
-        /* Layout Fix for FAB Obstruction:
-           增加 padding-bottom: 200px (足够容纳两个悬浮按钮的高度 + 间距)
-           这样内容滚动到底部时，文字会在按钮上方，不会被遮挡。
-        */
         .container-academic {
             max-width: 800px;
             margin: 0 auto;
@@ -70,7 +66,6 @@ layout: null
             position: relative;
         }
 
-        /* 悬浮切换按钮 */
         .theme-toggle-btn {
             position: fixed;
             bottom: 120px;
@@ -103,7 +98,6 @@ layout: null
             transform: rotate(30deg);
         }
 
-        /* 悬浮 Home 按钮 */
         .home-fab {
             position: fixed; bottom: 40px; right: 40px; width: 56px; height: 56px;
             background-color: var(--fab-bg); backdrop-filter: blur(5px);
@@ -139,24 +133,19 @@ layout: null
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
         @media (max-width: 640px) {
-            /* 移动端调整：
-               1. 稍微缩小按钮尺寸以减少遮挡
-               2. 调整位置
-               3. 保持足够的底部留白 (padding-bottom)
-            */
             .home-fab {
                 bottom: 20px; right: 20px;
                 width: 48px; height: 48px;
                 font-size: 1.25rem;
             }
             .theme-toggle-btn {
-                bottom: 80px; right: 20px; /* 20 + 48 + 12 = 80 */
+                bottom: 80px; right: 20px;
                 width: 48px; height: 48px;
                 font-size: 1.25rem;
             }
             .container-academic {
                 padding-top: 40px;
-                padding-bottom: 160px; /* 移动端底部留白 */
+                padding-bottom: 160px;
             }
         }
     </style>
@@ -164,8 +153,6 @@ layout: null
 <body>
 
     <div class="container-academic fade-in">
-        <!-- 注意：Theme Toggle Button 已从此移动到外部 -->
-
         <header class="flex justify-between items-end mb-8 border-b border-[var(--border-color)] pb-4 transition-colors duration-500">
             <div>
                 <h1 class="text-3xl mb-2 tracking-wide font-bold">Weiguo Ma</h1>
@@ -225,7 +212,6 @@ layout: null
         </footer>
     </div>
 
-    <!-- 悬浮按钮组 -->
     <button id="theme-toggle" class="theme-toggle-btn" title="Toggle Theme">
         <i class="ri-moon-line"></i>
     </button>
@@ -235,7 +221,6 @@ layout: null
     </a>
 
     <script>
-        // Shared Storage Key (Matching index.html)
         const STORAGE_KEY = 'site-theme-preference';
 
         const themeBtn = document.getElementById('theme-toggle');
@@ -262,7 +247,6 @@ layout: null
             }
         }
 
-        // Initialize immediately
         initTheme();
 
         themeBtn.addEventListener('click', () => {
@@ -277,9 +261,8 @@ layout: null
         });
 
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-            if (!localStorage.getItem(STORAGE_KEY)) {
-                setTheme(e.matches);
-            }
+            setTheme(e.matches);
+            localStorage.setItem(STORAGE_KEY, e.matches ? 'dark' : 'light');
         });
     </script>
 </body>
