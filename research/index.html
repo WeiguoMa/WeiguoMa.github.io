@@ -240,21 +240,6 @@ layout: null
             margin-bottom: 20px;
             text-align: justify;
             font-weight: 400;
-            display: -webkit-box;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            word-break: break-word;
-            overflow-wrap: break-word;
-        }
-
-        #research-list .paper-abstract {
-            -webkit-line-clamp: 3;
-        }
-
-        #other-works .paper-abstract,
-        #ideas .paper-abstract {
-            -webkit-line-clamp: 2;
         }
 
         .action-links { display: flex; gap: 16px; margin-top: 10px; }
@@ -346,7 +331,7 @@ layout: null
                     <h3 class="paper-title serif-font"><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
 
                     <div class="paper-abstract">
-                        {{ post.abstract | strip_html | remove: "Abstract:" | strip }}
+                        {{ post.abstract | strip_html | remove: "Abstract:" | strip | truncate: 320 }}
                     </div>
 
                     <div class="action-links">
@@ -392,7 +377,7 @@ layout: null
                     <h3 class="paper-title serif-font"><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
 
                     <div class="paper-abstract">
-                        {{ post.abstract | strip_html | remove: "Abstract:" | strip }}
+                        {{ post.abstract | strip_html | remove: "Abstract:" | strip | truncate: 190 }}
                     </div>
 
                     <div class="action-links">
@@ -426,7 +411,7 @@ layout: null
                     <h3 class="paper-title serif-font"><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
 
                     <div class="paper-abstract">
-                        {{ post.abstract | strip_html | remove: "Abstract:" | strip }}
+                        {{ post.abstract | strip_html | remove: "Abstract:" | strip | truncate: 190 }}
                     </div>
 
                     <div class="action-links">
