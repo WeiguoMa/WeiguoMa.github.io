@@ -1,15 +1,15 @@
 ---
 layout: research_post
-title: "Genuine Mpemba"
-date: 2025-12-05
+title: "Genuine Mpemba Effect"
+date: 2025-03-05
 categories: [ideas]
 status: "Idea"
 #online_web: https://doi.org/10.1103/PhysRevA.110.032604
 #arxiv_link: https://doi.org/10.48550/arXiv.2512.04577
-tags: [Quantum Mpemba Effect]
+#tags: [Quantum Mpemba Effect]
 
 abstract: >
-  Test
+ Original idea.
 ---
 
 [//]: # (<h2 class="section-title">sub title</h2>)

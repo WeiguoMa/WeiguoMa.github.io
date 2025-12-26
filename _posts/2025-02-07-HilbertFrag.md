@@ -5,8 +5,6 @@ date: 2025-02-07
 categories: [other_works]
 status: "Published (PRX Quantum 6, 010325)"
 online_web: https://doi.org/10.1103/PRXQuantum.6.010325
-#arxiv_link: https://doi.org/10.48550/arXiv.2211.05341
-#tags: [Quantum Mpemba Effect]
 
 abstract: >
   Isolated interacting quantum systems generally thermalize, yet there are several examples for the breakdown of

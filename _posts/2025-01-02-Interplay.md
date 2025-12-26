@@ -5,12 +5,10 @@ date: 2025-01-02
 categories: [other_works]
 status: "Published (Nat Commun 16, 108)"
 online_web: https://doi.org/10.1038/s41467-024-55343-2
-#arxiv_link: https://doi.org/10.48550/arXiv.2211.05341
-#tags: [Quantum Mpemba Effect]
 
 abstract: >
   Topological phases are robust against weak perturbations, but break down when disorder becomes sufficiently strong.
-  However, moderate disorder can also induce topologically nontrivial phases. Thouless pumping, as a (1+1)D counterpart
+  However, moderate disorder can also induce topologically nontrivial phases. Thouless pumping, as a $(1+1)D$ counterpart
   of the integer quantum Hall effect, is one of the simplest manifestations of topology. Here, we report experimental
   observations of the competition and interplay between Thouless pumping and disorder on a 41-qubit superconducting
   quantum processor. We improve a Floquet engineering technique to realize cycles of adiabatic pumping by simultaneously

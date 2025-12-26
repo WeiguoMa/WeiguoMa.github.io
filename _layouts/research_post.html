@@ -8,12 +8,26 @@ layout: null
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ page.title }} | Weiguo Ma</title>
 
-    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <!-- UPDATE: Added Noto Serif for body text -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
 
     <style>
         :root {
@@ -25,6 +39,12 @@ layout: null
             --fab-bg: rgba(26, 26, 26, 0.8);
             --code-bg: #1a1a1a;
             --section-title-size: 1.1rem;
+
+            --status-published-color: #4ade80;
+            --status-preprint-color: #fbbf24;
+            --status-submitted-color: #60a5fa;
+            --status-idea-color: #f87171;
+            --status-default-color: #a0a0a0;
         }
 
         [data-theme="light"] {
@@ -35,27 +55,32 @@ layout: null
             --border-color: #e5e5e5;
             --fab-bg: rgba(255, 255, 255, 0.9);
             --code-bg: #f5f5f5;
+
+            --status-published-color: #15803d;
+            --status-preprint-color: #d97706;
+            --status-submitted-color: #2563eb;
+            --status-idea-color: #dc2626;
+            --status-default-color: #4b5563;
         }
 
         body {
             background-color: var(--bg-color);
             color: var(--text-primary);
-            font-family: Arial, Helvetica, sans-serif;
+            font-family: 'Noto Serif', Georgia, 'Times New Roman', serif;
             font-weight: 400;
             line-height: 1.8;
             -webkit-font-smoothing: antialiased;
             transition: background-color 0.5s ease, color 0.5s ease;
         }
 
-        html, body { font-family: Arial, Helvetica, sans-serif !important; }
-        article, .content-body { font-family: Arial, Helvetica, sans-serif; }
+        html, body { font-family: 'Noto Serif', Georgia, 'Times New Roman', serif !important; }
+        article, .content-body { font-family: 'Noto Serif', Georgia, 'Times New Roman', serif; }
 
         .content-body .font-serif { font-family: 'Playfair Display', serif !important; }
         .content-body .font-mono { font-family: 'Fira Code', monospace !important; }
 
         h1, h2, h3, h4 { font-family: 'Playfair Display', serif; margin-top: 1.5em; margin-bottom: 0.5em; color: var(--text-primary); }
         .container-academic article h1 {
-            font-size: clamp(1.8rem, 3vw, 2.3rem) !important;
             line-height: 1.15 !important;
             margin-top: 16px;
             margin-bottom: 14px;
@@ -74,7 +99,7 @@ layout: null
         a:hover { border-bottom-style: solid; }
 
         .container-academic {
-            max-width: 800px;
+            max-width: 850px;
             margin: 0 auto;
             padding: 60px 24px 200px;
             position: relative;
@@ -86,6 +111,7 @@ layout: null
             text-justify: inter-word;
             text-indent: 2em;
             hyphens: auto;
+            font-size: 1.05rem;
         }
         .content-body ul { list-style: disc; margin-left: 1.5em; margin-bottom: 1.5em; color: var(--text-secondary); }
         .content-body blockquote { border-left: 4px solid var(--accent-color); padding-left: 1em; margin-left: 0; color: var(--text-secondary); font-style: italic; }
@@ -127,10 +153,7 @@ layout: null
             line-height: 1.5;
             text-align: justify;
         }
-        .aps-caption strong {
-            color: #000;
-            font-weight: 600;
-        }
+        .aps-caption strong { color: #000; font-weight: 600; }
 
         .nav-header { display: flex; justify-content: space-between; align-items: center; padding-top: 18px; margin-bottom: 22px; padding-bottom: 16px; border-bottom: 1px solid var(--border-color); }
         .back-link { font-family: 'Fira Code', monospace; font-size: 0.9rem; color: var(--text-secondary); display: flex; align-items: center; gap: 8px; border: none; }
@@ -143,6 +166,14 @@ layout: null
             margin-top: 6px;
             margin-bottom: 28px;
         }
+
+        .status-badge { font-weight: 500; }
+        .status-published { color: var(--status-published-color); }
+        .status-preprint { color: var(--status-preprint-color); } /* Preprint (Orange/Yellow) */
+        .status-submitted { color: var(--status-submitted-color); }
+        .status-idea { color: var(--status-idea-color); } /* Idea (Red) */
+        .status-default { color: var(--status-default-color); }
+
 
         .abstract { margin-bottom: 48px; }
         .abstract h2 {
@@ -261,7 +292,19 @@ layout: null
             <h1>{{ page.title }}</h1>
             <div class="meta-info">
                 <span>{{ page.date | date: "%Y-%m-%d" }}</span> |
-                <span style="color: var(--accent-color)">{{ page.status }}</span>
+
+                {% assign status_lower = page.status | downcase %}
+                {% if status_lower contains 'published' %}
+                    <span class="status-badge status-published">{{ page.status }}</span>
+                {% elsif status_lower contains 'preprint' or status_lower contains 'arxiv' %}
+                    <span class="status-badge status-preprint">{{ page.status }}</span>
+                {% elsif status_lower contains 'submitted' or status_lower contains 'review' %}
+                    <span class="status-badge status-submitted">{{ page.status }}</span>
+                {% elsif status_lower contains 'idea' %}
+                    <span class="status-badge status-idea">{{ page.status }}</span>
+                {% else %}
+                    <span class="status-badge status-default">{{ page.status }}</span>
+                {% endif %}
             </div>
 
             {% if page.abstract %}

@@ -11,9 +11,23 @@ layout: null
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
 
     <style>
         :root {
@@ -26,7 +40,7 @@ layout: null
             --tag-border: #333;
             --fab-bg: rgba(26, 26, 26, 0.8);
 
-            /* 状态颜色定义 (暗模式 Dark Mode) */
+            /* 暗模式 Dark Mode */
             --status-published-color: #4ade80; /* 亮绿色 */
             --status-preprint-color: #fbbf24;  /* 亮琥珀色/黄色 */
             --status-submitted-color: #60a5fa; /* 亮蓝色 */
@@ -44,7 +58,7 @@ layout: null
             --tag-border: #ddd;
             --fab-bg: rgba(255, 255, 255, 0.9);
 
-            /* 状态颜色定义 (亮模式 Light Mode) */
+            /* 亮模式 Light Mode */
             --status-published-color: #15803d; /* 深绿色 (Published) */
             --status-preprint-color: #d97706;  /* 橙黄色 (Preprint) */
             --status-submitted-color: #2563eb; /* 深蓝色 */
@@ -63,44 +77,37 @@ layout: null
 
         h1, h2, h3, .serif-font { font-family: 'Playfair Display', serif; }
 
-        /* --- 布局核心调整 --- */
         .container-academic {
-            /* 宽度从 800px 增加到 1100px，为右侧目录留出空间 */
             max-width: 1100px;
             margin: 0 auto;
             padding: 60px 24px 200px;
             position: relative;
-            /* 使用 Flexbox 实现左右分栏 */
             display: flex;
-            gap: 60px; /* 内容和目录之间的间距 */
+            gap: 60px;
             align-items: flex-start;
         }
 
-        /* 左侧主内容区域 */
         .main-content {
-            flex: 1; /* 占据剩余空间 */
-            min-width: 0; /* 防止内容溢出 Flex 容器 */
-            max-width: 800px; /* 限制正文的最大阅读宽度，保持原有体验 */
+            flex: 1;
+            min-width: 0;
+            max-width: 800px;
         }
 
-        /* 右侧浮动目录区域 */
         .toc-sidebar {
-            width: 180px; /* 目录宽度 */
+            width: 180px;
             position: sticky;
-            top: 100px; /* 距离顶部距离 */
-            display: none; /* 默认隐藏，后面通过媒体查询显示 */
+            top: 100px;
+            display: none;
             border-left: 1px solid var(--border-color);
             padding-left: 20px;
         }
 
-        /* 仅在屏幕足够宽时显示目录 (大于 1180px) */
-        @media (min-width: 1180px) {
+        @media (min-width: 1090px) {
             .toc-sidebar {
                 display: block;
             }
         }
 
-        /* 目录链接样式 */
         .toc-link {
             display: block;
             color: var(--text-secondary);
@@ -109,9 +116,9 @@ layout: null
             text-decoration: none;
             transition: all 0.2s ease;
             font-family: 'Fira Code', monospace;
-            border-left: 2px solid transparent; /* 左侧指示条 */
+            border-left: 2px solid transparent;
             padding-left: 10px;
-            margin-left: -21px; /* 抵消父级的 padding，使指示条贴合边框 */
+            margin-left: -21px;
         }
 
         .toc-link:hover {
@@ -124,7 +131,6 @@ layout: null
             font-weight: 500;
         }
 
-        /* --- 原有组件样式 --- */
         .theme-toggle-btn {
             position: fixed;
             bottom: 120px;
@@ -155,6 +161,40 @@ layout: null
         }
         .theme-toggle-btn:hover i {
             transform: rotate(30deg);
+        }
+
+        .back-to-top-btn {
+            position: fixed;
+            bottom: 200px;
+            right: 40px;
+            background-color: var(--fab-bg);
+            backdrop-filter: blur(5px);
+            border: 1px solid var(--border-color);
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            z-index: 100;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(10px);
+        }
+        .back-to-top-btn.visible {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+        .back-to-top-btn:hover {
+            color: var(--accent-color);
+            border-color: var(--accent-color);
+            transform: translateY(-5px);
         }
 
         .home-fab {
@@ -194,7 +234,29 @@ layout: null
         .status-idea { border-color: var(--status-idea-color); color: var(--status-idea-color); }
         .status-default { border-color: var(--tag-border); color: var(--status-default-color); }
 
-        .paper-abstract { color: var(--text-secondary); font-size: 1rem; margin-bottom: 20px; text-align: justify; font-weight: 300; }
+        .paper-abstract {
+            font-family: 'Noto Serif', serif;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            text-align: justify;
+            font-weight: 400;
+
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        #research-list .paper-abstract {
+            -webkit-line-clamp: 3;
+        }
+
+        #other-works .paper-abstract,
+        #ideas .paper-abstract {
+            -webkit-line-clamp: 2;
+        }
 
         .action-links { display: flex; gap: 16px; margin-top: 10px; }
         .action-link { font-size: 0.9rem; color: var(--accent-color); text-decoration: none; font-family: 'Fira Code', monospace; border-bottom: 1px solid transparent; transition: all 0.2s; opacity: 0.9; }
@@ -204,11 +266,10 @@ layout: null
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
         .section-header {
-            margin-top: 80px;
+            margin-top: 30px;
             margin-bottom: 20px;
-            scroll-margin-top: 60px; /* 确保点击跳转时标题不被遮挡 */
+            scroll-margin-top: 60px;
         }
-        /* 针对第一个板块也加 scroll-margin，虽然它没有 section-header 类 */
         #research-list { scroll-margin-top: 60px; }
 
         @media (max-width: 640px) {
@@ -222,10 +283,16 @@ layout: null
                 width: 48px; height: 48px;
                 font-size: 1.25rem;
             }
+            .back-to-top-btn {
+                bottom: 140px;
+                right: 20px;
+                width: 48px; height: 48px;
+                font-size: 1.25rem;
+            }
             .container-academic {
                 padding-top: 40px;
-                padding-bottom: 160px;
-                display: block; /* 移动端恢复块级布局 */
+                padding-bottom: 200px;
+                display: block;
             }
         }
     </style>
@@ -234,19 +301,18 @@ layout: null
 
     <div class="container-academic fade-in">
 
-        <!-- 左侧主内容容器 -->
         <div class="main-content">
             <header class="flex justify-between items-end mb-8 border-b border-[var(--border-color)] pb-4 transition-colors duration-500">
                 <div>
-                    <h1 class="text-3xl mb-2 tracking-wide font-bold">Weiguo Ma</h1>
-                    <p class="text-[var(--text-secondary)] font-serif italic">Research & Publications</p>
+                    <h1 class="text-4xl mb-2 tracking-wide font-bold">Weiguo Ma</h1>
+                    <p class="text-lg text-[var(--text-secondary)] font-serif italic">Research & Publications</p>
                 </div>
             </header>
 
             <section class="mb-10">
                 <p class="text-lg text-[var(--text-secondary)] leading-relaxed font-serif transition-colors duration-500">
                     My research interests lie at the intersection of
-                    <span class="text-[var(--text-primary)] border-b border-[var(--border-color)] pb-0.5 font-medium">Quantum Many-Body Physics</span>
+                    <span class="text-[var(--text-primary)] border-b border-[var(--border-color)] pb-0.5 font-medium">Non-Equilibrium Physics</span>
                     and
                     <span class="text-[var(--text-primary)] border-b border-[var(--border-color)] pb-0.5 font-medium">Quantum Computation</span>.
                 </p>
@@ -282,7 +348,7 @@ layout: null
                     <h3 class="paper-title serif-font"><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
 
                     <div class="paper-abstract">
-                        {{ post.abstract | strip_html | remove: "Abstract:" | strip | truncate: 290 }}
+                        {{ post.abstract | strip_html | remove: "Abstract:" | strip }}
                     </div>
 
                     <div class="action-links">
@@ -329,7 +395,7 @@ layout: null
                     <h3 class="paper-title serif-font"><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
 
                     <div class="paper-abstract">
-                        {{ post.abstract | strip_html | remove: "Abstract:" | strip | truncate: 150 }}
+                        {{ post.abstract | strip_html | remove: "Abstract:" | strip }}
                     </div>
 
                     <div class="action-links">
@@ -364,7 +430,7 @@ layout: null
                     <h3 class="paper-title serif-font"><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
 
                     <div class="paper-abstract">
-                        {{ post.excerpt | strip_html | truncate: 200 }}
+                        {{ post.abstract | strip_html | strip }}
                     </div>
 
                     <div class="action-links">
@@ -383,11 +449,11 @@ layout: null
             </section>
 
             <footer class="mt-20 pt-8 border-t border-[var(--border-color)] text-center text-[var(--text-secondary)] text-sm font-mono transition-colors duration-500">
-                &copy; 2025 Weiguo Ma. content licensed under CC-BY-4.0.
+                &copy; 2025 Weiguo Ma
             </footer>
         </div> <!-- End of .main-content -->
 
-        <!-- 右侧浮动目录 (Outline) -->
+        <!-- Outline -->
         <aside class="toc-sidebar">
             <nav id="toc-nav">
                 <a href="#research-list" class="toc-link">Selected Works</a>
@@ -398,7 +464,10 @@ layout: null
 
     </div> <!-- End of .container-academic -->
 
-    <!-- 悬浮按钮组 -->
+    <button id="back-to-top" class="back-to-top-btn" title="Back to Top">
+        <i class="ri-arrow-up-line"></i>
+    </button>
+
     <button id="theme-toggle" class="theme-toggle-btn" title="Toggle Theme">
         <i class="ri-moon-line"></i>
     </button>
@@ -452,7 +521,6 @@ layout: null
             localStorage.setItem(STORAGE_KEY, e.matches ? 'dark' : 'light');
         });
 
-        // === 滚动监听 (ScrollSpy) ===
         document.addEventListener('DOMContentLoaded', () => {
             const sections = document.querySelectorAll('main, section.section-header');
             const navLinks = document.querySelectorAll('.toc-link');
@@ -466,9 +534,7 @@ layout: null
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        // 移除所有激活状态
                         navLinks.forEach(link => link.classList.remove('active'));
-                        // 激活当前对应的链接
                         const id = entry.target.getAttribute('id');
                         const activeLink = document.querySelector(`.toc-link[href="#${id}"]`);
                         if (activeLink) activeLink.classList.add('active');
@@ -477,6 +543,46 @@ layout: null
             }, observerOptions);
 
             sections.forEach(section => observer.observe(section));
+
+            const SCROLL_KEY = 'research-page-scroll-pos';
+
+            const savedScrollPos = sessionStorage.getItem(SCROLL_KEY);
+            if (savedScrollPos) {
+                const container = document.querySelector('.container-academic');
+                if (container) {
+                    container.classList.remove('fade-in');
+                }
+
+                window.scrollTo({
+                    top: parseInt(savedScrollPos),
+                    behavior: 'instant'
+                });
+
+                sessionStorage.removeItem(SCROLL_KEY);
+            }
+
+            document.querySelectorAll('.research-item a').forEach(link => {
+                link.addEventListener('click', () => {
+                    sessionStorage.setItem(SCROLL_KEY, window.scrollY);
+                });
+            });
+
+            const backToTopBtn = document.getElementById('back-to-top');
+
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 300) {
+                    backToTopBtn.classList.add('visible');
+                } else {
+                    backToTopBtn.classList.remove('visible');
+                }
+            });
+
+            backToTopBtn.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
         });
     </script>
 </body>

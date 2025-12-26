@@ -5,8 +5,6 @@ date: 2025-08-11
 categories: [other_works]
 status: "Published (Appl. Phys. Lett. 127, 064001)"
 online_web: https://doi.org/10.1063/5.0281890
-#arxiv_link: https://doi.org/10.48550/arXiv.2211.05341
-#tags: [Quantum Mpemba Effect]
 
 abstract: >
   Quantum simulation has emerged as a powerful framework for investigating complex many-body phenomena. A key requirement

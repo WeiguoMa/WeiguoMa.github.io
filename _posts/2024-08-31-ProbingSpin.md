@@ -5,8 +5,6 @@ date: 2024-08-31
 categories: [other_works]
 status: "Published (Nat Commun 15, 7573)"
 online_web: https://doi.org/10.1038/s41467-024-52082-2
-#arxiv_link: https://doi.org/10.48550/arXiv.2211.05341
-#tags: [Quantum Mpemba Effect]
 
 abstract: >
   Characterizing the nature of hydrodynamical transport properties in quantum dynamics provides valuable insights into
