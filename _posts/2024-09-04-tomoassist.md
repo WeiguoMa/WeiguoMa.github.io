@@ -22,7 +22,6 @@ abstract: >
   devices and lay the foundation for enhanced design and assessment of quantum algorithms in complex noise environments.
 ---
 
-<h2 class="section-title">sub title</h2>
+[//]: # (<h2 class="section-title">sub title</h2>)
 
-
-![insert a figure]({{ '/assets/posts/2024-09-04-tomoAssist/figures/somefigure.png' | relative_url }})
+[//]: # (![insert a figure]&#40;{{ '/assets/posts/2024-09-04-tomoAssist/figures/somefigure.png' | relative_url }}&#41;)
