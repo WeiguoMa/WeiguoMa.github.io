@@ -40,12 +40,11 @@ layout: null
             --tag-border: #333;
             --fab-bg: rgba(26, 26, 26, 0.8);
 
-            /* 暗模式 Dark Mode */
-            --status-published-color: #4ade80; /* 亮绿色 */
-            --status-preprint-color: #fbbf24;  /* 亮琥珀色/黄色 */
-            --status-submitted-color: #60a5fa; /* 亮蓝色 */
-            --status-idea-color: #f87171;      /* 亮红色 (Idea) */
-            --status-default-color: #a0a0a0;   /* 亮灰色 */
+            --status-published-color: #4ade80;
+            --status-preprint-color: #fbbf24;
+            --status-submitted-color: #60a5fa;
+            --status-idea-color: #f87171;
+            --status-default-color: #a0a0a0;
         }
 
         [data-theme="light"] {
@@ -58,12 +57,11 @@ layout: null
             --tag-border: #ddd;
             --fab-bg: rgba(255, 255, 255, 0.9);
 
-            /* 亮模式 Light Mode */
-            --status-published-color: #15803d; /* 深绿色 (Published) */
-            --status-preprint-color: #d97706;  /* 橙黄色 (Preprint) */
-            --status-submitted-color: #2563eb; /* 深蓝色 */
-            --status-idea-color: #dc2626;      /* 深红色 (Idea) */
-            --status-default-color: #4b5563;   /* 深灰色 */
+            --status-published-color: #15803d;
+            --status-preprint-color: #d97706;
+            --status-submitted-color: #2563eb;
+            --status-idea-color: #dc2626;
+            --status-default-color: #4b5563;
         }
 
         body {
@@ -242,11 +240,12 @@ layout: null
             margin-bottom: 20px;
             text-align: justify;
             font-weight: 400;
-
             display: -webkit-box;
             -webkit-box-orient: vertical;
             overflow: hidden;
             text-overflow: ellipsis;
+            word-break: break-word;
+            overflow-wrap: break-word;
         }
 
         #research-list .paper-abstract {
@@ -318,7 +317,6 @@ layout: null
                 </p>
             </section>
 
-            <!-- ========================= 1. Selected Works ========================= -->
             <main id="research-list">
                 <h2 class="text-lg font-bold mb-2 pl-3 border-l-2 border-[var(--accent-color)] uppercase tracking-widest text-[var(--text-secondary)] transition-colors duration-500">Selected Works</h2>
 
@@ -366,7 +364,6 @@ layout: null
                 {% endif %}
             </main>
 
-            <!-- ========================= 2. Other Works ========================= -->
             <section id="other-works" class="section-header">
                 <h2 class="text-lg font-bold mb-2 pl-3 border-l-2 border-[var(--accent-color)] uppercase tracking-widest text-[var(--text-secondary)] transition-colors duration-500">Other Works</h2>
 
@@ -413,7 +410,6 @@ layout: null
                 {% endif %}
             </section>
 
-            <!-- ========================= 3. Ideas ========================= -->
             <section id="ideas" class="section-header">
                 <h2 class="text-lg font-bold mb-2 pl-3 border-l-2 border-[var(--accent-color)] uppercase tracking-widest text-[var(--text-secondary)] transition-colors duration-500">Ideas</h2>
 
@@ -430,7 +426,7 @@ layout: null
                     <h3 class="paper-title serif-font"><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
 
                     <div class="paper-abstract">
-                        {{ post.abstract | strip_html | strip }}
+                        {{ post.abstract | strip_html | remove: "Abstract:" | strip }}
                     </div>
 
                     <div class="action-links">
@@ -449,11 +445,10 @@ layout: null
             </section>
 
             <footer class="mt-20 pt-8 border-t border-[var(--border-color)] text-center text-[var(--text-secondary)] text-sm font-mono transition-colors duration-500">
-                &copy; 2025 Weiguo Ma
+                &copy; 2025 Weiguo Ma. content licensed under CC-BY-4.0.
             </footer>
-        </div> <!-- End of .main-content -->
+        </div>
 
-        <!-- Outline -->
         <aside class="toc-sidebar">
             <nav id="toc-nav">
                 <a href="#research-list" class="toc-link">Selected Works</a>
@@ -462,7 +457,7 @@ layout: null
             </nav>
         </aside>
 
-    </div> <!-- End of .container-academic -->
+    </div>
 
     <button id="back-to-top" class="back-to-top-btn" title="Back to Top">
         <i class="ri-arrow-up-line"></i>
@@ -527,7 +522,7 @@ layout: null
 
             const observerOptions = {
                 root: null,
-                rootMargin: '-20% 0px -70% 0px', // 视口中间部分触发
+                rootMargin: '-20% 0px -70% 0px',
                 threshold: 0
             };
 
