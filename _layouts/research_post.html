@@ -326,11 +326,11 @@ layout: null
         </footer>
     </div>
 
-    <button id="theme-toggle" class="fab-btn theme-fab" title="Toggle Theme">
+    <button id="theme-toggle" class="fab-btn theme-fab" title="Toggle Theme" aria-label="Toggle theme">
         <i class="ri-moon-line"></i>
     </button>
 
-    <button id="back-to-top" class="fab-btn top-fab" title="Back to Top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+    <button id="back-to-top" class="fab-btn top-fab" title="Back to Top" aria-label="Back to top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
         <i class="ri-arrow-up-line"></i>
     </button>
 
@@ -375,8 +375,9 @@ layout: null
         });
 
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-            setTheme(e.matches);
-            localStorage.setItem(STORAGE_KEY, e.matches ? 'dark' : 'light');
+            if (!localStorage.getItem(STORAGE_KEY)) {
+                setTheme(e.matches);
+            }
         });
 
         const topBtn = document.getElementById('back-to-top');
@@ -419,7 +420,10 @@ layout: null
                     if (/^(Figure|Fig)\.?\s?\d+/i.test(altText)) {
                         const parts = altText.split(':');
                         if (parts.length > 1) {
-                            caption.innerHTML = `<strong>${parts[0]}:</strong>${parts.slice(1).join(':')}`;
+                            const label = document.createElement('strong');
+                            label.textContent = `${parts[0]}:`;
+                            caption.appendChild(label);
+                            caption.append(parts.slice(1).join(':'));
                         } else {
                             caption.textContent = altText;
                         }

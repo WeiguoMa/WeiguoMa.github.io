@@ -335,9 +335,9 @@ layout: null
                     </div>
 
                     <div class="action-links">
-                        {% if post.online_web and post.online_web != "#" %}<a href="{{ post.online_web }}" class="action-link" target="_blank">[Online]</a>{% endif %}
-                        {% if post.arxiv_link and post.arxiv_link != "#" %}<a href="{{ post.arxiv_link }}" class="action-link" target="_blank">[Arxiv]</a>{% endif %}
-                        {% if post.code_link %}<a href="{{ post.code_link }}" class="action-link" target="_blank">[Code]</a>{% endif %}
+                        {% if post.online_web and post.online_web != "#" %}<a href="{{ post.online_web }}" class="action-link" target="_blank" rel="noopener noreferrer">[Online]</a>{% endif %}
+                        {% if post.arxiv_link and post.arxiv_link != "#" %}<a href="{{ post.arxiv_link }}" class="action-link" target="_blank" rel="noopener noreferrer">[Arxiv]</a>{% endif %}
+                        {% if post.code_link %}<a href="{{ post.code_link }}" class="action-link" target="_blank" rel="noopener noreferrer">[Code]</a>{% endif %}
                     </div>
                 </div>
                 {% endfor %}
@@ -381,9 +381,9 @@ layout: null
                     </div>
 
                     <div class="action-links">
-                        {% if post.online_web and post.online_web != "#" %}<a href="{{ post.online_web }}" class="action-link" target="_blank">[Online]</a>{% endif %}
-                        {% if post.arxiv_link and post.arxiv_link != "#" %}<a href="{{ post.arxiv_link }}" class="action-link" target="_blank">[Arxiv]</a>{% endif %}
-                        {% if post.code_link %}<a href="{{ post.code_link }}" class="action-link" target="_blank">[Code]</a>{% endif %}
+                        {% if post.online_web and post.online_web != "#" %}<a href="{{ post.online_web }}" class="action-link" target="_blank" rel="noopener noreferrer">[Online]</a>{% endif %}
+                        {% if post.arxiv_link and post.arxiv_link != "#" %}<a href="{{ post.arxiv_link }}" class="action-link" target="_blank" rel="noopener noreferrer">[Arxiv]</a>{% endif %}
+                        {% if post.code_link %}<a href="{{ post.code_link }}" class="action-link" target="_blank" rel="noopener noreferrer">[Code]</a>{% endif %}
                     </div>
                 </div>
                 {% endfor %}
@@ -415,9 +415,9 @@ layout: null
                     </div>
 
                     <div class="action-links">
-                        {% if post.online_web and post.online_web != "#" %}<a href="{{ post.online_web }}" class="action-link" target="_blank">[Online]</a>{% endif %}
-                        {% if post.arxiv_link and post.arxiv_link != "#" %}<a href="{{ post.arxiv_link }}" class="action-link" target="_blank">[Arxiv]</a>{% endif %}
-                        {% if post.code_link %}<a href="{{ post.code_link }}" class="action-link" target="_blank">[Code]</a>{% endif %}
+                        {% if post.online_web and post.online_web != "#" %}<a href="{{ post.online_web }}" class="action-link" target="_blank" rel="noopener noreferrer">[Online]</a>{% endif %}
+                        {% if post.arxiv_link and post.arxiv_link != "#" %}<a href="{{ post.arxiv_link }}" class="action-link" target="_blank" rel="noopener noreferrer">[Arxiv]</a>{% endif %}
+                        {% if post.code_link %}<a href="{{ post.code_link }}" class="action-link" target="_blank" rel="noopener noreferrer">[Code]</a>{% endif %}
                     </div>
                 </div>
                 {% endfor %}
@@ -497,8 +497,9 @@ layout: null
         });
 
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-            setTheme(e.matches);
-            localStorage.setItem(STORAGE_KEY, e.matches ? 'dark' : 'light');
+            if (!localStorage.getItem(STORAGE_KEY)) {
+                setTheme(e.matches);
+            }
         });
 
         document.addEventListener('DOMContentLoaded', () => {
