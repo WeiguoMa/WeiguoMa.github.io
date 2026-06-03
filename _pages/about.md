@@ -5,10 +5,10 @@ cover_image: /assets/image/sec_bg.svg
 permalink: /about/
 ---
 
-I am currently a Ph.D. candidate at Institute of Physics, Chinese Academy of Sciences, supervised by Prof. [Heng Fan][heng-fan].
+I received my Ph.D. in Condensed Matter Physics from the Institute of Physics, Chinese Academy of Sciences, where I was supervised by Prof. [Heng Fan][heng-fan].
 
 ### Education
-- 2021.08 - Present, **Institute of Physics, Chinese Academy of Sciences**, Ph.D. in Condensed Matter Physics.
+- 2021.08 - 2026.06, **Institute of Physics, Chinese Academy of Sciences**, Ph.D. in Condensed Matter Physics.
 - 2017.09 - 2021.6, School of Physical Sciences and Technology, **Lanzhou University**, B.S. in Theoretical Physics.
 
 ### Experience

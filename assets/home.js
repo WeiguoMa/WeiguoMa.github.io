@@ -351,7 +351,7 @@ const canvas = document.getElementById('bg-canvas');
         'whoami': () => `
             <div class="cmd-result">
                 <div class="result-item"><span class="result-key">User:</span> Weiguo Ma</div>
-                <div class="result-item"><span class="result-key">Role:</span> Ph.D. Candidate</div>
+                <div class="result-item"><span class="result-key">Role:</span> Ph.D. Graduate</div>
                 <div class="result-item"><span class="result-key">Affiliation:</span> Institute of Physics, Chinese Academy of Sciences</div>
                 <div class="result-item"><span class="result-key">Status:</span> <span style="color:var(--color-cyan)">Online & Coding...</span></div>
             </div>
