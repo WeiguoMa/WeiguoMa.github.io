@@ -325,7 +325,6 @@ layout: null
                         {% endif %}
 
                         <span>{{ post.date | date: "%Y" }}</span>
-                        {% for tag in post.tags %} <span>{{ tag }}</span> {% endfor %}
                     </div>
 
                     <h3 class="paper-title serif-font"><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
@@ -371,7 +370,6 @@ layout: null
                         {% endif %}
 
                         <span>{{ post.date | date: "%Y" }}</span>
-                        {% for tag in post.tags %} <span>{{ tag }}</span> {% endfor %}
                     </div>
 
                     <h3 class="paper-title serif-font"><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
@@ -405,7 +403,6 @@ layout: null
                     <div class="paper-meta">
                         <span class="meta-tag status-idea">Idea</span>
                         <span>{{ post.date | date: "%Y-%m-%d" }}</span>
-                        {% for tag in post.tags %} <span>{{ tag }}</span> {% endfor %}
                     </div>
 
                     <h3 class="paper-title serif-font"><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
