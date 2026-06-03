@@ -47,6 +47,59 @@ p {
           hyphens: auto;
 }
 
+.about-page {
+  max-width: 42rem;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.about-page p,
+.about-page li,
+.about-detail {
+  -webkit-hyphens: none;
+      -ms-hyphens: none;
+          hyphens: none;
+  overflow-wrap: normal;
+  text-align: left;
+  text-wrap: pretty;
+}
+
+.about-page .about-lede {
+  margin-bottom: var(--spacer-2);
+  line-height: 1.65;
+}
+
+.about-timeline {
+  margin-top: .75rem;
+  margin-bottom: var(--spacer-2);
+}
+
+.about-row {
+  display: grid;
+  grid-template-columns: 10rem minmax(0, 1fr);
+  column-gap: var(--spacer);
+  align-items: baseline;
+  margin-bottom: .75rem;
+}
+
+.about-date {
+  color: var(--gray-600);
+  font-family: var(--body-font);
+  font-size: .95rem;
+  white-space: nowrap;
+}
+
+.about-detail {
+  min-width: 0;
+}
+
+@media (max-width: $sm-width) {
+  .about-row {
+    grid-template-columns: 1fr;
+    row-gap: .15rem;
+  }
+}
+
 ul, ol, dl {
   margin-top: 0;
   margin-bottom: 1rem;
