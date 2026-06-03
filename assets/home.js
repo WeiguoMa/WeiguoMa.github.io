@@ -17,6 +17,7 @@ const canvas = document.getElementById('bg-canvas');
     const themeBtn = document.getElementById('theme-btn');
     const themeIcon = document.getElementById('theme-icon');
     const metaColorScheme = document.getElementById('meta-color-scheme');
+    const reduceMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
 
     let currentTheme = 'dark';
 
@@ -24,11 +25,15 @@ const canvas = document.getElementById('bg-canvas');
         currentTheme = theme;
         if (theme === 'light') {
             document.documentElement.setAttribute('data-theme', 'light');
-            themeIcon.className = 'ri-sun-line';
+            themeIcon.className = 'ri-moon-line';
+            themeBtn.setAttribute('aria-label', 'Switch to dark theme');
+            themeBtn.setAttribute('title', 'Switch to dark theme');
             if(metaColorScheme) metaColorScheme.content = 'light';
         } else {
             document.documentElement.removeAttribute('data-theme');
-            themeIcon.className = 'ri-moon-line';
+            themeIcon.className = 'ri-sun-line';
+            themeBtn.setAttribute('aria-label', 'Switch to light theme');
+            themeBtn.setAttribute('title', 'Switch to light theme');
             if(metaColorScheme) metaColorScheme.content = 'dark';
         }
     }
@@ -61,14 +66,16 @@ const canvas = document.getElementById('bg-canvas');
     });
 
 
+    const prefersReducedMotion = reduceMotionQuery.matches;
+
     const config = {
-        count: window.innerWidth < 768 ? 60 : 100,
+        count: prefersReducedMotion ? 24 : (window.innerWidth < 768 ? 60 : 100),
         connRadius: 180,
         mouseRadius: 140,
-        mouseForce: 0.02,
-        baseSpeed: 0.45,
+        mouseForce: prefersReducedMotion ? 0.006 : 0.02,
+        baseSpeed: prefersReducedMotion ? 0.12 : 0.45,
         separationDist: 60,
-        separationForce: 0.002
+        separationForce: prefersReducedMotion ? 0.0006 : 0.002
     };
 
     let mouse = { x: -999, y: -999 };
@@ -246,12 +253,19 @@ const canvas = document.getElementById('bg-canvas');
 
     function initParticles() {
         particles = [];
-        const count = window.innerWidth < 768 ? 60 : 100;
+        const count = prefersReducedMotion ? 24 : (window.innerWidth < 768 ? 60 : 100);
         for(let i=0; i<count; i++) particles.push(new Particle(i));
     }
 
     function startAnimation() {
         initParticles();
+        if (prefersReducedMotion) {
+            animState = 'IDLE';
+            explosionTime = Date.now() - 2500;
+            requestAnimationFrame(loop);
+            return;
+        }
+
         loadingText.style.opacity = 1;
 
         setTimeout(() => {
@@ -515,5 +529,9 @@ const canvas = document.getElementById('bg-canvas');
     }
 
     setTimeout(() => {
+        printOutput(commands.help(), 'help');
+    }, prefersReducedMotion ? 400 : 4700);
+
+    setTimeout(() => {
         cmdInput.focus();
-    }, 4500);
+    }, prefersReducedMotion ? 500 : 4800);

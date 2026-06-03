@@ -465,10 +465,14 @@ layout: null
         function setTheme(isDark) {
             if (isDark) {
                 document.documentElement.removeAttribute('data-theme');
-                themeIcon.className = 'ri-moon-line';
+                themeIcon.className = 'ri-sun-line';
+                themeBtn.setAttribute('aria-label', 'Switch to light theme');
+                themeBtn.setAttribute('title', 'Switch to light theme');
             } else {
                 document.documentElement.setAttribute('data-theme', 'light');
-                themeIcon.className = 'ri-sun-line';
+                themeIcon.className = 'ri-moon-line';
+                themeBtn.setAttribute('aria-label', 'Switch to dark theme');
+                themeBtn.setAttribute('title', 'Switch to dark theme');
             }
         }
 
