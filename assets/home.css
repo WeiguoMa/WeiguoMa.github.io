@@ -99,7 +99,7 @@
             width: 45px;
             height: 45px;
             opacity: 0;
-            animation: uiFadeIn 1s ease-out 3s forwards;
+            animation: uiFadeIn 0.25s ease-out 0.75s forwards;
         }
         .theme-toggle:hover {
             transform: rotate(15deg);
@@ -126,7 +126,7 @@
             justify-content: space-between;
             gap: 40px;
             opacity: 0;
-            animation: uiFadeIn 2s ease-out 2.2s forwards;
+            animation: uiFadeIn 0.5s ease-out 0.55s forwards;
         }
 
         @keyframes uiFadeIn {

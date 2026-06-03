@@ -1,10 +1,9 @@
 const canvas = document.getElementById('bg-canvas');
     const ctx = canvas.getContext('2d');
-    const loadingText = document.getElementById('loading-text');
     let width, height;
     let particles = [];
 
-    let animState = 'CLOUD';
+    let animState = 'IDLE';
     let explosionTime = 0;
 
     const themeColors = {
@@ -13,7 +12,6 @@ const canvas = document.getElementById('bg-canvas');
     };
 
     const STORAGE_KEY = 'site-theme-preference';
-
     const themeBtn = document.getElementById('theme-btn');
     const themeIcon = document.getElementById('theme-icon');
     const metaColorScheme = document.getElementById('meta-color-scheme');
@@ -111,142 +109,83 @@ const canvas = document.getElementById('bg-canvas');
         }
 
         update() {
-            if (animState === 'CLOUD') {
-                const centerX = width/2;
-                const centerY = height/2;
-                const dx = centerX - this.x;
-                const dy = centerY - this.y;
+            const speed = Math.sqrt(this.vx*this.vx + this.vy*this.vy);
+            if (speed > config.baseSpeed) {
+                this.vx *= 0.96;
+                this.vy *= 0.96;
+            } else if (speed < config.baseSpeed * 0.5) {
+                this.vx += (Math.random()-0.5) * 0.05;
+                this.vy += (Math.random()-0.5) * 0.05;
+            }
 
-                this.vx += dx * 0.001;
-                this.vy += dy * 0.001;
+            for (let j = 0; j < particles.length; j++) {
+                if (this.index === j) continue;
+                const p2 = particles[j];
+                const dx = this.x - p2.x;
+                const dy = this.y - p2.y;
+                const dist = Math.sqrt(dx*dx + dy*dy);
 
-                this.vx += (Math.random()-0.5) * 0.2;
-                this.vy += (Math.random()-0.5) * 0.2;
-
-                this.x += this.vx;
-                this.y += this.vy;
-
-            } else if (animState === 'EXPLODE') {
-                const centerX = width / 2;
-                const centerY = height / 2;
-                const dx = this.x - centerX;
-                const dy = this.y - centerY;
-                const dist = Math.sqrt(dx*dx + dy*dy) + 1;
-
-                const force = 50 / (dist + 50);
-                this.vx += (dx / dist) * force * 4;
-                this.vy += (dy / dist) * force * 4;
-
-                const maxV = 15;
-                if (Math.abs(this.vx) > maxV) this.vx = (this.vx / Math.abs(this.vx)) * maxV;
-                if (Math.abs(this.vy) > maxV) this.vy = (this.vy / Math.abs(this.vy)) * maxV;
-
-                this.x += this.vx;
-                this.y += this.vy;
-
-            } else if (animState === 'IDLE') {
-
-                const speed = Math.sqrt(this.vx*this.vx + this.vy*this.vy);
-                if (speed > config.baseSpeed) {
-                    this.vx *= 0.96;
-                    this.vy *= 0.96;
-                } else if (speed < config.baseSpeed * 0.5) {
-                    this.vx += (Math.random()-0.5) * 0.05;
-                    this.vy += (Math.random()-0.5) * 0.05;
+                if (dist < config.separationDist && dist > 0) {
+                    const force = (config.separationDist - dist) / config.separationDist;
+                    this.vx += (dx/dist) * force * config.separationForce;
+                    this.vy += (dy/dist) * force * config.separationForce;
                 }
+            }
 
-                for (let j = 0; j < particles.length; j++) {
-                    if (this.index === j) continue;
-                    const p2 = particles[j];
-                    const dx = this.x - p2.x;
-                    const dy = this.y - p2.y;
-                    const dist = Math.sqrt(dx*dx + dy*dy);
+            this.x += this.vx;
+            this.y += this.vy;
 
-                    if (dist < config.separationDist && dist > 0) {
-                        const force = (config.separationDist - dist) / config.separationDist;
-                        this.vx += (dx/dist) * force * config.separationForce;
-                        this.vy += (dy/dist) * force * config.separationForce;
-                    }
-                }
+            if (this.x < 0 || this.x > width) {
+                this.vx *= -1;
+                this.x = Math.max(0, Math.min(width, this.x));
+            }
+            if (this.y < 0 || this.y > height) {
+                this.vy *= -1;
+                this.y = Math.max(0, Math.min(height, this.y));
+            }
 
-                this.x += this.vx;
-                this.y += this.vy;
-
-                if (this.x < 0 || this.x > width) {
-                    this.vx *= -1;
-                    this.x = Math.max(0, Math.min(width, this.x));
-                }
-                if (this.y < 0 || this.y > height) {
-                    this.vy *= -1;
-                    this.y = Math.max(0, Math.min(height, this.y));
-                }
-
-                let dx = mouse.x - this.x;
-                let dy = mouse.y - this.y;
-                let dist = Math.sqrt(dx*dx + dy*dy);
-                if (dist < config.mouseRadius) {
-                    const force = (config.mouseRadius - dist) / config.mouseRadius;
-                    const repelStrength = config.mouseForce * 5;
-                    this.vx -= (dx/dist) * force * repelStrength;
-                    this.vy -= (dy/dist) * force * repelStrength;
-                }
+            let dx = mouse.x - this.x;
+            let dy = mouse.y - this.y;
+            let dist = Math.sqrt(dx*dx + dy*dy);
+            if (dist < config.mouseRadius) {
+                const force = (config.mouseRadius - dist) / config.mouseRadius;
+                const repelStrength = config.mouseForce * 5;
+                this.vx -= (dx/dist) * force * repelStrength;
+                this.vy -= (dy/dist) * force * repelStrength;
             }
         }
 
         draw() {
             const colors = themeColors[currentTheme] || themeColors.dark;
-            const isCloud = animState === 'CLOUD';
+            ctx.fillStyle = this.phase > 0.5
+                ? `rgba(${colors.c1.r},${colors.c1.g},${colors.c1.b},${this.alpha})`
+                : `rgba(${colors.c2.r},${colors.c2.g},${colors.c2.b},${this.alpha})`;
 
-            if (isCloud) {
-                const dx = this.x - width/2;
-                const dy = this.y - height/2;
-                const dist = Math.sqrt(dx*dx + dy*dy);
-                const rFactor = Math.min(dist / (Math.min(width, height)*0.2), 1);
-                const flicker = Math.random() > 0.9 ? 1 : 0.8;
+            if (Math.random() > 0.96) {
+                const tearRange = 4;
+                const angle = Math.random() * Math.PI * 2;
+                const dist = (Math.random() * 0.5 + 0.5) * tearRange;
+                const offsetX = Math.cos(angle) * dist;
+                const offsetY = Math.sin(angle) * dist;
 
-                if (rFactor < 0.3) {
-                    ctx.fillStyle = `rgba(220, 255, 255, ${this.alpha * flicker})`;
-                } else if (this.phase > 0.5) {
-                    ctx.fillStyle = `rgba(${colors.c1.r}, ${colors.c1.g}, ${colors.c1.b}, ${this.alpha * 0.9 * flicker})`;
-                } else {
-                    ctx.fillStyle = `rgba(${colors.c2.r}, ${colors.c2.g}, ${colors.c2.b}, ${this.alpha * 0.9 * flicker})`;
-                }
+                ctx.beginPath();
+                ctx.arc(this.x + offsetX, this.y + offsetY, this.size, 0, Math.PI*2);
+                ctx.fill();
 
+                const r = this.phase > 0.5 ? colors.c1.r : colors.c2.r;
+                const g = this.phase > 0.5 ? colors.c1.g : colors.c2.g;
+                const b = this.phase > 0.5 ? colors.c1.b : colors.c2.b;
+
+                ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, 0.3)`;
+                ctx.lineWidth = 1.2;
+                ctx.beginPath();
+                ctx.moveTo(this.x, this.y);
+                ctx.lineTo(this.x + offsetX, this.y + offsetY);
+                ctx.stroke();
+            } else {
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI*2);
                 ctx.fill();
-            } else {
-
-                ctx.fillStyle = this.phase > 0.5
-                    ? `rgba(${colors.c1.r},${colors.c1.g},${colors.c1.b},${this.alpha})`
-                    : `rgba(${colors.c2.r},${colors.c2.g},${colors.c2.b},${this.alpha})`;
-
-                if (Math.random() > 0.96) {
-                    const tearRange = 4;
-                    const angle = Math.random() * Math.PI * 2;
-                    const dist = (Math.random() * 0.5 + 0.5) * tearRange;
-                    const offsetX = Math.cos(angle) * dist;
-                    const offsetY = Math.sin(angle) * dist;
-
-                    ctx.beginPath();
-                    ctx.arc(this.x + offsetX, this.y + offsetY, this.size, 0, Math.PI*2);
-                    ctx.fill();
-
-                    const r = this.phase > 0.5 ? colors.c1.r : colors.c2.r;
-                    const g = this.phase > 0.5 ? colors.c1.g : colors.c2.g;
-                    const b = this.phase > 0.5 ? colors.c1.b : colors.c2.b;
-
-                    ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, 0.3)`;
-                    ctx.lineWidth = 1.2;
-                    ctx.beginPath();
-                    ctx.moveTo(this.x, this.y);
-                    ctx.lineTo(this.x + offsetX, this.y + offsetY);
-                    ctx.stroke();
-                } else {
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.size, 0, Math.PI*2);
-                    ctx.fill();
-                }
             }
         }
     }
@@ -257,37 +196,28 @@ const canvas = document.getElementById('bg-canvas');
         for(let i=0; i<count; i++) particles.push(new Particle(i));
     }
 
+    function spreadParticlesForIdle() {
+        particles.forEach(p => {
+            p.x = Math.random() * width;
+            p.y = Math.random() * height;
+
+            const angle = Math.random() * Math.PI * 2;
+            const speed = config.baseSpeed * (0.7 + Math.random() * 0.8);
+            p.vx = Math.cos(angle) * speed;
+            p.vy = Math.sin(angle) * speed;
+        });
+    }
+
     function startAnimation() {
         initParticles();
-        if (prefersReducedMotion) {
-            animState = 'IDLE';
-            explosionTime = Date.now() - 2500;
-            requestAnimationFrame(loop);
-            return;
-        }
-
-        loadingText.style.opacity = 1;
-
-        setTimeout(() => {
-            animState = 'EXPLODE';
-            loadingText.style.opacity = 0;
-            loadingText.style.transform = "translate(-50%, -50%) scale(1.5)";
-            loadingText.style.filter = "blur(10px)";
-            explosionTime = Date.now();
-        }, 2000);
-
+        spreadParticlesForIdle();
+        explosionTime = Date.now() - 2500;
         requestAnimationFrame(loop);
     }
 
     function loop() {
         ctx.clearRect(0, 0, width, height);
         const colors = themeColors[currentTheme] || themeColors.dark;
-
-        if (animState === 'EXPLODE') {
-            if (Date.now() - explosionTime > 800) {
-                animState = 'IDLE';
-            }
-        }
 
         let showLines = false;
         let lineOpacityFactor = 0;
@@ -530,8 +460,8 @@ const canvas = document.getElementById('bg-canvas');
 
     setTimeout(() => {
         printOutput(commands.help(), 'help');
-    }, prefersReducedMotion ? 400 : 4700);
+    }, 400);
 
     setTimeout(() => {
         cmdInput.focus();
-    }, prefersReducedMotion ? 500 : 4800);
+    }, 500);
