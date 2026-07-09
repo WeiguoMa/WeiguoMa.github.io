@@ -1,17 +1,17 @@
 ---
 layout: research_post
-title: "Observing Two-Particle Correlation Dynamics in Tunable Superconducting Bose-Hubbard Simulators"
-date: 2025-09-02
+title: "Observing Quantum Correlation Dynamics in Tunable Superconducting Bose-Hubbard Simulators"
+date: 2026-07-09
 categories: [other_works]
-status: "Preprint (arXiv:2509.02180)"
+status: "Published (Phys. Rev. Lett.)"
 #online_web:
 arxiv_link: https://doi.org/10.48550/arXiv.2509.02180
-tags: [Quantum Mpemba Effect]
+tags: [Quantum Correlations, Bose-Hubbard Simulators, Superconducting Circuits]
 
 abstract: >
   The generation and propagation of quantum correlations are central to understanding many dynamical properties of
   quantum systems, yet their precise experimental control and characterization remain a key challenge. Here we
-  experimentally study the two-particle correlation dynamics via quantum walks in superconducting Bose-Hubbard qutrit
+  experimentally study quantum correlation dynamics via quantum walks in superconducting Bose-Hubbard qutrit
   arrays, with tunable on-site interaction $U$ realized by Floquet engineering. Quantum walks show the characteristic
   change from bosonic bunching to fermionic antibunching with increasing $U$. The two-particle entanglement and quantum
   correlation dynamics, as measured by negativity and quantum discord, are investigated. We find that depending on the
