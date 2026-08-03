@@ -3,8 +3,8 @@ layout: research_post
 title: "Observing Quantum Correlation Dynamics in Tunable Superconducting Bose-Hubbard Simulators"
 date: 2026-07-09
 categories: [other_works]
-status: "Published (Phys. Rev. Lett.)"
-#online_web:
+status: "Published (Phys. Rev. Lett. 137, 050603)"
+online_web: https://doi.org/10.1103/hj9h-3tjc
 arxiv_link: https://doi.org/10.48550/arXiv.2509.02180
 tags: [Quantum Correlations, Bose-Hubbard Simulators, Superconducting Circuits]
 
