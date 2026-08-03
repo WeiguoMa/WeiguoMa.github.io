@@ -6,6 +6,7 @@ categories: [other_works]
 status: "Preprint (arXiv:2606.05270)"
 #online_web:
 arxiv_link: https://doi.org/10.48550/arXiv.2606.05270
+authors: "Jia-Cheng Song, Yu Liu, Ming-Chuan Wang, Ke-Xiong Yan, Yang He, Yun-Hao Shi, Wei-Ping Yuan, Cheng-Lin Deng, Li Li, Zhen-Ting Bao, Yutao Chen, Xu-Yang Gu, Tian-Ming Li, Gui-Han Liang, Zheng-He Liu, Wei-Guo Ma, Zhen-Yu Peng, Shuai-Li Wang, Yong-Xi Xiao, Yi-Han Yu, Jia-Chi Zhang, Kui Zhao, Min-Xuan Zhou, Kaixuan Huang, Yu-Ran Zhang, Yu-Xiang Zhang, Zhongcheng Xiang, Dongning Zheng, Ye-Hong Chen, Kai Xu, and Heng Fan"
 tags: [Quantum Rabi Model, Spectral Symmetry, Superconducting Circuits]
 
 abstract: >

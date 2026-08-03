@@ -5,6 +5,7 @@ date: 2026-02-15
 categories: [other_works]
 status: "Preprint (arXiv:2602.14167)"
 arxiv_link: https://doi.org/10.48550/arXiv.2602.14167
+authors: "Shi-Xin Zhang, Yu-Qin Chen, Weitang Li, Jiace Sun, Wei-Guo Ma, Pei-Lin Zheng, Yu-Xiang Huang, Qi-Xiang Wang, Hui Yu, Zhuo Li, Xuyang Huang, Zong-Liang Li, Zhou-Quan Wan, Shuo Liu, Jiezhong Qiu, Jiaqi Miao, Zixuan Song, Yuxuan Yan, Kazuki Tsuoka, Pan Zhang, Lei Wang, Heng Fan, Chang-Yu Hsieh, Hong Yao, and Tao Xiang"
 tags: [Quantum Software, Tensor Networks]
 
 abstract: >

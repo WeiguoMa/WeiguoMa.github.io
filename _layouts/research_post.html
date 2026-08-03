@@ -7,6 +7,20 @@ layout: null
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ page.title }} | Weiguo Ma</title>
+    <meta name="description" content="{{ page.abstract | strip_html | strip_newlines | truncate: 160 | escape }}">
+    <link rel="canonical" href="{{ page.url | absolute_url }}">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="{{ page.title | escape }}">
+    <meta property="og:description" content="{{ page.abstract | strip_html | strip_newlines | truncate: 200 | escape }}">
+    <meta property="og:url" content="{{ page.url | absolute_url }}">
+    <meta property="og:image" content="{{ '/assets/image/avatar.webp' | absolute_url }}">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="{{ page.title | escape }}">
+    <meta name="twitter:description" content="{{ page.abstract | strip_html | strip_newlines | truncate: 160 | escape }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ '/assets/image/apple-touch-icon.png' | relative_url }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ '/assets/image/favicon-32x32.png' | relative_url }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ '/assets/image/favicon-16x16.png' | relative_url }}">
+    <link rel="manifest" href="{{ '/assets/image/site.webmanifest' | relative_url }}">
 
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 
@@ -164,7 +178,42 @@ layout: null
             font-size: 0.85rem;
             color: var(--text-secondary);
             margin-top: 6px;
-            margin-bottom: 28px;
+            margin-bottom: 14px;
+        }
+
+        .paper-authors {
+            margin: 0 0 14px;
+            color: var(--text-secondary);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.98rem;
+            line-height: 1.65;
+        }
+        .paper-authors strong { color: var(--text-primary); font-weight: 600; }
+
+        .paper-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 0 0 34px;
+        }
+        .paper-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            color: var(--text-secondary);
+            font-family: 'Fira Code', monospace;
+            font-size: 0.82rem;
+            line-height: 1.4;
+            text-decoration: none;
+            transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+        }
+        .paper-action:hover {
+            color: var(--accent-color);
+            border-color: var(--accent-color);
+            background-color: var(--code-bg);
         }
 
         .status-badge { font-weight: 500; }
@@ -290,6 +339,11 @@ layout: null
 
         <article>
             <h1>{{ page.title }}</h1>
+            {% if page.authors %}
+            <div class="paper-authors">
+                {{ page.authors | replace: "Wei-Guo Ma", "<strong>Wei-Guo Ma</strong>" }}
+            </div>
+            {% endif %}
             <div class="meta-info">
                 <span>{{ page.date | date: "%Y-%m-%d" }}</span> |
 
@@ -306,6 +360,20 @@ layout: null
                     <span class="status-badge status-default">{{ page.status }}</span>
                 {% endif %}
             </div>
+
+            {% if page.online_web or page.arxiv_link or page.code_link %}
+            <div class="paper-actions" aria-label="Paper resources">
+                {% if page.online_web and page.online_web != "#" %}
+                <a href="{{ page.online_web }}" class="paper-action" target="_blank" rel="noopener noreferrer"><i class="ri-article-line"></i> Paper</a>
+                {% endif %}
+                {% if page.arxiv_link and page.arxiv_link != "#" %}
+                <a href="{{ page.arxiv_link }}" class="paper-action" target="_blank" rel="noopener noreferrer"><i class="ri-file-paper-2-line"></i> arXiv</a>
+                {% endif %}
+                {% if page.code_link and page.code_link != "#" %}
+                <a href="{{ page.code_link }}" class="paper-action" target="_blank" rel="noopener noreferrer"><i class="ri-code-s-slash-line"></i> Code</a>
+                {% endif %}
+            </div>
+            {% endif %}
 
             {% if page.abstract %}
             <section class="abstract">

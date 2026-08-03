@@ -5,6 +5,7 @@ date: 2024-08-31
 categories: [other_works]
 status: "Published (Nat Commun 15, 7573)"
 online_web: https://doi.org/10.1038/s41467-024-52082-2
+authors: "Yun-Hao Shi, Zheng-Hang Sun, Yong-Yi Wang, Zheng-An Wang, Yu-Ran Zhang, Wei-Guo Ma, Hao-Tian Liu, Kui Zhao, Jia-Cheng Song, Gui-Han Liang, Zheng-Yang Mei, Jia-Chi Zhang, Hao Li, Chi-Tong Chen, Xiaohui Song, Jieci Wang, Guangming Xue, Haifeng Yu, Kaixuan Huang, Zhongcheng Xiang, Kai Xu, Dongning Zheng, and Heng Fan"
 
 abstract: >
   Characterizing the nature of hydrodynamical transport properties in quantum dynamics provides valuable insights into

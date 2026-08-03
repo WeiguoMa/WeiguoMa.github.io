@@ -7,6 +7,7 @@ status: "Published (Phys. Rev. A 110, 032604)"
 online_web: https://doi.org/10.1103/PhysRevA.110.032604
 arxiv_link: https://doi.org/10.48550/arXiv.2508.07610
 code_link: https://github.com/WeiguoMa/Tomography-assisted-MPDO-QCircuit
+authors: "Wei-Guo Ma, Yun-Hao Shi, Kai Xu, and Heng Fan"
 tags: [Noisy Quantum Simulator, Tensor Networks]
 
 abstract: >

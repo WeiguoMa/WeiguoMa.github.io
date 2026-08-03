@@ -5,6 +5,7 @@ date: 2025-02-07
 categories: [other_works]
 status: "Published (PRX Quantum 6, 010325)"
 online_web: https://doi.org/10.1103/PRXQuantum.6.010325
+authors: "Yong-Yi Wang, Yun-Hao Shi, Zheng-Hang Sun, Chi-Tong Chen, Zheng-An Wang, Kui Zhao, Hao-Tian Liu, Wei-Guo Ma, Ziting Wang, Hao Li, Jia-Chi Zhang, Yu Liu, Cheng-Lin Deng, Tian-Ming Li, Yang He, Zheng-He Liu, Zhen-Yu Peng, Xiaohui Song, Guangming Xue, Haifeng Yu, Kaixuan Huang, Zhongcheng Xiang, Dongning Zheng, Kai Xu, and Heng Fan"
 
 abstract: >
   Isolated interacting quantum systems generally thermalize, yet there are several examples for the breakdown of

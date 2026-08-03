@@ -5,6 +5,7 @@ date: 2025-08-11
 categories: [other_works]
 status: "Published (Appl. Phys. Lett. 127, 064001)"
 online_web: https://doi.org/10.1063/5.0281890
+authors: "Kui Zhao, Ziting Wang, Yu Liu, Gui-Han Liang, Cai-Ping Fang, Yun-Hao Shi, Lv Zhang, Jia-Chi Zhang, Tian-Ming Li, Hao Li, Yueshan Xu, Wei-Guo Ma, Hao-Tian Liu, Jia-Cheng Song, Zhen-Ting Bao, Yong-Xi Xiao, Bing-Jie Chen, Cheng-Lin Deng, Zheng-He Liu, Yang He, Si-Yun Zhou, Xiaohui Song, Zhongcheng Xiang, Dongning Zheng, Kaixuan Huang, Kai Xu, and Heng Fan"
 
 abstract: >
   Quantum simulation has emerged as a powerful framework for investigating complex many-body phenomena. A key requirement

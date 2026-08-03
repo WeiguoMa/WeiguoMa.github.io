@@ -4,6 +4,7 @@ title: "Genuine Mpemba Effect"
 date: 2025-03-05
 categories: [ideas]
 status: "Idea"
+authors: "Wei-Guo Ma"
 #online_web: https://doi.org/10.1103/PhysRevA.110.032604
 #arxiv_link: https://doi.org/10.48550/arXiv.2512.04577
 #tags: [Quantum Mpemba Effect]

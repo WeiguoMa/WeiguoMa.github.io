@@ -5,6 +5,7 @@ date: 2025-01-02
 categories: [other_works]
 status: "Published (Nat Commun 16, 108)"
 online_web: https://doi.org/10.1038/s41467-024-55343-2
+authors: "Yu Liu, Yu-Ran Zhang, Yun-Hao Shi, Tao Liu, Congwei Lu, Yong-Yi Wang, Hao Li, Tian-Ming Li, Cheng-Lin Deng, Si-Yun Zhou, Tong Liu, Jia-Chi Zhang, Gui-Han Liang, Zheng-Yang Mei, Wei-Guo Ma, Hao-Tian Liu, Zheng-He Liu, Chi-Tong Chen, Kaixuan Huang, Xiaohui Song, Shiping Zhao, Ye Tian, Zhongcheng Xiang, Dongning Zheng, Franco Nori, Kai Xu, and Heng Fan"
 
 abstract: >
   Topological phases are robust against weak perturbations, but break down when disorder becomes sufficiently strong.

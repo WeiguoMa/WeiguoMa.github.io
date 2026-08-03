@@ -5,6 +5,7 @@ date: 2020-12-15
 categories: [other_works]
 status: "Published (IEEE Photonics Technology Letters 32.24 (2020): 1515-1518)"
 online_web: https://ieeexplore.ieee.org/abstract/document/9239389
+authors: "Yongheng Jiang, Zhenfu Zhang, Junbo Yang, Xu Han, Huifu Xiao, Wei-Guo Ma, Guanghui Ren, Arnan Mitchell, and Yonghui Tian"
 
 abstract: >
   Reconfigurable optical add-drop multiplexer (ROADM) is one of the key building blocks for on-chip optical networks,

@@ -5,6 +5,7 @@ date: 2026-05-21
 categories: [research]
 status: "Preprint (arXiv:2605.21900)"
 arxiv_link: https://doi.org/10.48550/arXiv.2605.21900
+authors: "Wei-Guo Ma and Heng Fan"
 tags: [Driven-Dissipative Systems, Bose-Hubbard Lattice]
 
 abstract: >

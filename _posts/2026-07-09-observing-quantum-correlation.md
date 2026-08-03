@@ -6,6 +6,7 @@ categories: [other_works]
 status: "Published (Phys. Rev. Lett. 137, 050603)"
 online_web: https://doi.org/10.1103/hj9h-3tjc
 arxiv_link: https://doi.org/10.48550/arXiv.2509.02180
+authors: "Ziting Wang, Si-Yun Zhou, Yun-Hao Shi, Kaixuan Huang, Zhaohua Yang, Jingning Zhang, Kui Zhao, Yueshan Xu, Hao Li, Shoukuan Zhao, Yulong Feng, Guangming Xue, Yu Liu, Wei-Guo Ma, Cai-Ping Fang, Hao-Tian Liu, Yong-Yi Wang, Kai Xu, Haifeng Yu, Heng Fan, and Shiping Zhao"
 tags: [Quantum Correlations, Bose-Hubbard Simulators, Superconducting Circuits]
 
 abstract: >

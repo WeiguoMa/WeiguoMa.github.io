@@ -6,6 +6,7 @@ categories: [other_works]
 status: "Preprint (arXiv:2508.20759)"
 #online_web:
 arxiv_link: https://doi.org/10.48550/arXiv.2508.20759
+authors: "Ziting Wang, Zi-Yong Ge, Yun-Hao Shi, Zheng-An Wang, Si-Yun Zhou, Hao Li, Kui Zhao, Yue-Shan Xu, Wei-Guo Ma, Hao-Tian Liu, Cai-Ping Fang, Jia-Cheng Song, Tian-Ming Li, Jia-Chi Zhang, Yu Liu, Cheng-Lin Deng, Guangming Xue, Haifeng Yu, Kai Xu, Kaixuan Huang, Franco Nori, and Heng Fan"
 
 abstract: >
   Lattice gauge theories provide a non-perturbative framework for understanding confinement and hadronic physics, but
