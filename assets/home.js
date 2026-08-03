@@ -299,18 +299,18 @@ const canvas = document.getElementById('bg-canvas');
                 <div class="result-section-title">Research Interests</div>
 
                 <div class="result-item">
-                    <div style="margin-bottom:4px;">1. <span class="string">"Quantum Computation"</span></div>
-                    <div style="font-size:0.9em; opacity:0.8; margin-left:20px;">Tensor Networks, machine learning for quantum computing, hybrid quantum-classic computing.</div>
+                    <div style="margin-bottom:4px;">1. <span class="string">"Programmable Quantum Simulation"</span></div>
+                    <div style="font-size:0.9em; opacity:0.8; margin-left:20px;">Correlated dynamics, quantum transport, and programmable many-body phenomena.</div>
                 </div>
 
                 <div class="result-item">
-                    <div style="margin-bottom:4px;">2. <span class="string">"Non-equilibrium physics"</span></div>
-                    <div style="font-size:0.9em; opacity:0.8; margin-left:20px;">driven-dissipative Bose-hubbard model, time crystal, random circuits, mearsure/noise-induced phase transition.</div>
+                    <div style="margin-bottom:4px;">2. <span class="string">"Nonequilibrium Quantum Many-Body Physics"</span></div>
+                    <div style="font-size:0.9em; opacity:0.8; margin-left:20px;">Driven-dissipative Bose-Hubbard systems, Floquet phases, time crystals, and measurement- and noise-induced transitions.</div>
                 </div>
 
                 <div class="result-item">
-                    <div style="margin-bottom:4px;">3. <span class="string">"Many-body physics"</span></div>
-                    <div style="font-size:0.9em; opacity:0.8; margin-left:20px;">Solitons in Bose-hubbard model.</div>
+                    <div style="margin-bottom:4px;">3. <span class="string">"Tensor Networks and Quantum Software"</span></div>
+                    <div style="font-size:0.9em; opacity:0.8; margin-left:20px;">Scalable simulation, differentiable programming, and machine learning for quantum systems.</div>
                 </div>
             </div>
         `,

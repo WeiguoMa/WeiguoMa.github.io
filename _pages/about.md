@@ -1,7 +1,7 @@
 ---
 layout: page
 title: About me
-cover_image: /assets/image/sec_bg.svg
+cover_image: /assets/image/sec_bg.webp
 permalink: /about/
 class: about-page
 ---
@@ -34,8 +34,8 @@ I received my Ph.D. in Condensed Matter Physics from the Institute of Physics, C
 Please see the full research profile via [Google Scholar](https://scholar.google.com/citations?user=BgKQ2UAAAAAJ&hl=en) and [CV](../assets/cv_weiguo_opt.pdf).
 
 Interests:
-- Quantum computing with tensor network technologies, machine learning for quantum computing, and hybrid quantum-classic computing.
-- Non-equilibrium physics: driven-dissipative Bose-Hubbard model, time crystal, random circuits, and measurement/noise-induced phase transition.
-- Condensed matter physics: solitons in Bose-hubbard system
+- Programmable quantum simulation of correlated dynamics, quantum transport, and many-body phenomena.
+- Nonequilibrium quantum many-body physics, including driven-dissipative Bose-Hubbard systems, Floquet phases, time crystals, and measurement- and noise-induced transitions.
+- Tensor-network methods and quantum software for scalable simulation, differentiable programming, and machine learning in quantum systems.
 
 [heng-fan]: https://scholar.google.com/citations?user=Qu84zBIAAAAJ&hl=en

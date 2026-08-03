@@ -1,5 +1,7 @@
 ---
 layout: null
+title: Research and Publications
+description: Research and publications by Weiguo Ma in programmable quantum simulation, nonequilibrium many-body physics, tensor networks, and quantum software.
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -7,6 +9,20 @@ layout: null
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Research | Weiguo Ma</title>
+    <meta name="description" content="{{ page.description }}">
+    <link rel="canonical" href="{{ page.url | absolute_url }}">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Research and Publications | Weiguo Ma">
+    <meta property="og:description" content="{{ page.description }}">
+    <meta property="og:url" content="{{ page.url | absolute_url }}">
+    <meta property="og:image" content="{{ '/assets/image/avatar.webp' | absolute_url }}">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Research and Publications | Weiguo Ma">
+    <meta name="twitter:description" content="{{ page.description }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ '/assets/image/apple-touch-icon.png' | relative_url }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ '/assets/image/favicon-32x32.png' | relative_url }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ '/assets/image/favicon-16x16.png' | relative_url }}">
+    <link rel="manifest" href="{{ '/assets/image/site.webmanifest' | relative_url }}">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
@@ -295,10 +311,10 @@ layout: null
 
             <section class="mb-10">
                 <p class="text-lg text-[var(--text-secondary)] leading-relaxed font-serif transition-colors duration-500">
-                    My research interests lie at the intersection of
-                    <span class="text-[var(--text-primary)] border-b border-[var(--border-color)] pb-0.5 font-medium">Non-Equilibrium Physics</span>
-                    and
-                    <span class="text-[var(--text-primary)] border-b border-[var(--border-color)] pb-0.5 font-medium">Quantum Computation</span>.
+                    My research connects
+                    <span class="text-[var(--text-primary)] border-b border-[var(--border-color)] pb-0.5 font-medium">Programmable Quantum Simulation</span>,
+                    <span class="text-[var(--text-primary)] border-b border-[var(--border-color)] pb-0.5 font-medium">Nonequilibrium Many-Body Physics</span>, and
+                    <span class="text-[var(--text-primary)] border-b border-[var(--border-color)] pb-0.5 font-medium">Tensor Networks and Quantum Software</span>.
                 </p>
             </section>
 
@@ -427,7 +443,7 @@ layout: null
             </section>
 
             <footer class="mt-20 pt-8 border-t border-[var(--border-color)] text-center text-[var(--text-secondary)] text-sm font-mono transition-colors duration-500">
-                &copy; 2025 Weiguo Ma. content licensed under CC-BY-4.0.
+                &copy; {{ site.time | date: "%Y" }} Weiguo Ma. Content licensed under CC BY 4.0.
             </footer>
         </div>
 

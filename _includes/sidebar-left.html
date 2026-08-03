@@ -13,7 +13,7 @@
     <span>{{ site.title }}</span>
   </div>
   <div class="masthead-tagline">
-    <small>{{ site.description }}</small>
+    <small>{{ site.tagline | default: site.description }}</small>
   </div>
   {%- if site.data.navigation -%}
   <nav class="navigation">
