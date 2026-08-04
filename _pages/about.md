@@ -25,7 +25,7 @@ I received my Ph.D. in Condensed Matter Physics from the Institute of Physics, C
 <div class="about-timeline">
   <div class="about-row">
     <div class="about-date">2025.10 - 2025.11</div>
-    <div class="about-detail">Visiting Ph.D. student, Technology Innovation Institute, Abu Dhabi, United Arab Emirates.</div>
+    <div class="about-detail">Visiting Ph.D. student, Technology Innovation Institute, Abu Dhabi, United Arab Emirates. Host: <a href="https://scholar.google.com/citations?user=rghdhhgAAAAJ&amp;hl=en">Prof. Dr. Luigi Amico</a>.</div>
   </div>
 </div>
 

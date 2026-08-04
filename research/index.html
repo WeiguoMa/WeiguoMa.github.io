@@ -409,6 +409,8 @@ description: Research and publications by Weiguo Ma in programmable quantum simu
                 {% endif %}
             </section>
 
+            {% comment %} Ideas section is intentionally hidden while preserving its posts. {% endcomment %}
+            {% comment %}
             <section id="ideas" class="section-header">
                 <h2 class="text-lg font-bold mb-2 pl-3 border-l-2 border-[var(--accent-color)] uppercase tracking-widest text-[var(--text-secondary)] transition-colors duration-500">Ideas</h2>
 
@@ -441,6 +443,7 @@ description: Research and publications by Weiguo Ma in programmable quantum simu
                 </div>
                 {% endif %}
             </section>
+            {% endcomment %}
 
             <footer class="mt-20 pt-8 border-t border-[var(--border-color)] text-center text-[var(--text-secondary)] text-sm font-mono transition-colors duration-500">
                 &copy; {{ site.time | date: "%Y" }} Weiguo Ma. Content licensed under CC BY 4.0.
@@ -451,7 +454,6 @@ description: Research and publications by Weiguo Ma in programmable quantum simu
             <nav id="toc-nav">
                 <a href="#research-list" class="toc-link">Selected Works</a>
                 <a href="#other-works" class="toc-link">Other Works</a>
-                <a href="#ideas" class="toc-link">Ideas</a>
             </nav>
         </aside>
 
