@@ -6,7 +6,7 @@ permalink: /about/
 class: about-page
 ---
 
-I received my Ph.D. in Condensed Matter Physics from the Institute of Physics, Chinese Academy of Sciences, where I was supervised by Prof. [Heng Fan][heng-fan].
+I am currently a postdoctoral research fellow at the Institute of Physics, Chinese Academy of Sciences. I earned my Ph.D. in Condensed Matter Physics at the same institute under the supervision of Prof. [Heng Fan][heng-fan].
 {: .about-lede}
 
 ### Education
@@ -23,6 +23,10 @@ I received my Ph.D. in Condensed Matter Physics from the Institute of Physics, C
 
 ### Experience
 <div class="about-timeline">
+  <div class="about-row">
+    <div class="about-date">2026.08 - Present</div>
+    <div class="about-detail">Postdoctoral Research Fellow, <strong>Institute of Physics, Chinese Academy of Sciences</strong>, Beijing, China.</div>
+  </div>
   <div class="about-row">
     <div class="about-date">2025.10 - 2025.11</div>
     <div class="about-detail">Visiting Ph.D. student, Technology Innovation Institute, Abu Dhabi, United Arab Emirates. Host: <a href="https://scholar.google.com/citations?user=rghdhhgAAAAJ&amp;hl=en">Prof. Dr. Luigi Amico</a>.</div>
