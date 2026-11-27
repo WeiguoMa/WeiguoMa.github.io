@@ -321,7 +321,9 @@ description: Research and publications by Weiguo Ma in programmable quantum simu
             <main id="research-list">
                 <h2 class="text-lg font-bold mb-2 pl-3 border-l-2 border-[var(--accent-color)] uppercase tracking-widest text-[var(--text-secondary)] transition-colors duration-500">Selected Works</h2>
 
-                {% assign research_posts = site.categories.research %}
+                {% assign first_posts = site.categories.research | where: "list_first", true %}
+                {% assign remaining_posts = site.categories.research | where_exp: "post", "post.list_first != true" %}
+                {% assign research_posts = first_posts | concat: remaining_posts %}
 
                 {% for post in research_posts %}
                 <div class="research-item">
@@ -367,7 +369,9 @@ description: Research and publications by Weiguo Ma in programmable quantum simu
             <section id="other-works" class="section-header">
                 <h2 class="text-lg font-bold mb-2 pl-3 border-l-2 border-[var(--accent-color)] uppercase tracking-widest text-[var(--text-secondary)] transition-colors duration-500">Other Works</h2>
 
-                {% assign other_posts = site.categories.other_works %}
+                {% assign first_posts = site.categories.other_works | where: "list_first", true %}
+                {% assign remaining_posts = site.categories.other_works | where_exp: "post", "post.list_first != true" %}
+                {% assign other_posts = first_posts | concat: remaining_posts %}
 
                 {% for post in other_posts %}
                 <div class="research-item">
