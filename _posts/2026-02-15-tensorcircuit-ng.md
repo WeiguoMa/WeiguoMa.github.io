@@ -3,7 +3,7 @@ layout: research_post
 title: "TensorCircuit-NG: A Universal, Composable, and Scalable Platform for Quantum Computing and Quantum Simulation"
 date: 2026-02-15
 categories: [other_works]
-status: "Published (Quantum Sci. Technol., 2026)"
+status: "Published (Quantum Science and Technology, 2026)"
 list_first: true
 online_web: https://doi.org/10.1088/2058-9565/aec6d4
 arxiv_link: https://doi.org/10.48550/arXiv.2602.14167

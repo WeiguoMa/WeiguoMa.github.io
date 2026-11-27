@@ -3,7 +3,7 @@ layout: research_post
 title: "Tomography-assisted noisy quantum circuit simulation using matrix product density operators"
 date: 2024-09-04
 category: research
-status: "Published (Phys. Rev. A 110, 032604)"
+status: "Published (Physical Review A 110, 032604)"
 online_web: https://doi.org/10.1103/PhysRevA.110.032604
 arxiv_link: https://doi.org/10.48550/arXiv.2508.07610
 code_link: https://github.com/WeiguoMa/Tomography-assisted-MPDO-QCircuit

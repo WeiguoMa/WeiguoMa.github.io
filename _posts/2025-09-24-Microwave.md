@@ -3,7 +3,7 @@ layout: research_post
 title: "Microwave-activated high-fidelity three-qubit gate scheme for fixed-frequency superconducting qubits"
 date: 2025-09-24
 categories: [other_works]
-status: "Published (Phys. Rev. Applied 24, 034064)"
+status: "Published (Physical Review Applied 24, 034064)"
 online_web: https://doi.org/10.1103/l721-33qk
 authors: "Kui Zhao, Wei-Guo Ma, Ziting Wang, Hao Li, Kaixuan Huang, Yun-Hao Shi, Kai Xu, and Heng Fan"
 
